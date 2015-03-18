@@ -138,6 +138,88 @@ begin
   end;
 end;
 
+//Alpha 2010
+
+function firstCoveringPrefix(elementsArray : Array of longint) : LongInt;
+var
+  a1stCoverPrefix, i : Integer;
+  occurences : Array of boolean;
+begin
+  a1stCoverPrefix := 0;
+  SetLength(occurences,length(elementsArray));
+
+  if length(elementsArray)>0 then
+  begin
+    for I := 0 to length(elementsArray)-1 do
+    begin
+      if not occurences[elementsArray[i]] then
+      begin
+        occurences[elementsArray[i]] := true;
+        a1stCoverPrefix := i;
+      end;
+    end;
+  end;
+  firstCoveringPrefix := a1stCoverPrefix;
+end;
+
+//Beta 2010
+
+function FUNCintersectingDiscs(elementsArray : Array of longint) : LongInt;
+var
+  intersectingDiscs, i, N,farthestPossibleDiscsEnd,discEnd,containingDiscs : Integer;
+  discsStarts,discsEnds : Array of Integer;
+begin
+  intersectingDiscs := 0;
+
+  if length(elementsArray)>0 then
+  begin
+    N:= length(elementsArray);
+    SetLength(discsStarts,N);
+    SetLength(discsEnds,N);
+
+
+    //Calculating how many discs starts and ends in every point
+    farthestPossibleDiscsEnd := N - 1;
+    for I := 0 to N-1 do
+    begin
+      if i>= elementsArray[i] then
+        discsStarts[i - elementsArray[i]]:=discsStarts[i - elementsArray[i]]+1
+      else
+        discsStarts[0]:=discsStarts[0]+1;
+      //If the disc is ending after the N - 1 point we will treat it as ending in N - 1 point.
+      discEnd := i + elementsArray[i];
+      //The discEnd < 0 check is for arithmetic overflow prevention
+      if (discEnd<0)or (discEnd>=N) then
+        discsEnds[farthestPossibleDiscsEnd]:=discsEnds[farthestPossibleDiscsEnd]+1
+      else
+        discsEnds[discEnd]:=discsEnds[discEnd]+1
+    end;
+
+    //This will keep track of discs that have started before the current point and will end in this point or after it
+    containingDiscs := 0;
+    for I := 0 to N-1 do
+    begin
+        //We increase the number of intersecting discs by:
+        //- the number of discs that have been started but not ended before current point multiplied by the number of discs starting at current point (all of them intersect with each other)
+        intersectingDiscs := intersectingDiscs +containingDiscs * discsStarts[i];
+        //- the number of discs starting at current point multiplied by number of discs starting at current point minus one and this divided by 2 (every disc starting at current point is intersecting with all the others discs starting at current point and we need to avoid counting double intersections)
+        intersectingDiscs := intersectingDiscs +(discsStarts[i] * (discsStarts[i] - 1))div 2;
+
+        //If the number of intersecting discs is above 10,000,000 we should return -1
+        if (intersectingDiscs > 10000000) then
+            intersectingDiscs:= -1;
+
+        //We adjust the number of discs started before the current by adding the number of discs starting in current point and substracting the number of discs ending in current point
+        //This way we keep the number of discs starting before or in current point which haven't end yet
+        containingDiscs := containingDiscs + discsStarts[i] - discsEnds[i];
+    end
+
+
+  end;
+  FUNCintersectingDiscs := intersectingDiscs;
+end;
+
+
 
 Var
   F : File of Longint;
