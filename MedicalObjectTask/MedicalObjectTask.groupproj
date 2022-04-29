@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{F7820D76-094C-406C-83FB-9E3ED0AA71A7}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="SimpleBankServer.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="SimpleBankServerTests.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="SimpleBankServer">
+        <MSBuild Projects="SimpleBankServer.dproj"/>
+    </Target>
+    <Target Name="SimpleBankServer:Clean">
+        <MSBuild Projects="SimpleBankServer.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SimpleBankServer:Make">
+        <MSBuild Projects="SimpleBankServer.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SimpleBankServerTests">
+        <MSBuild Projects="SimpleBankServerTests.dproj"/>
+    </Target>
+    <Target Name="SimpleBankServerTests:Clean">
+        <MSBuild Projects="SimpleBankServerTests.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SimpleBankServerTests:Make">
+        <MSBuild Projects="SimpleBankServerTests.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="SimpleBankServer;SimpleBankServerTests"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="SimpleBankServer:Clean;SimpleBankServerTests:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="SimpleBankServer:Make;SimpleBankServerTests:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
