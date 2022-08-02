@@ -38,10 +38,38 @@ type
     property  Eof: boolean read FEof;
   end;
 
+function  GetOSErrorMessage(ErrorCode : Integer) : String; overload;
+procedure RaiseOSError; overload;
+procedure RaiseOSError(err : Integer); overload;
+
 implementation
 
-uses Consts, Contnrs, Winsock, Com_Sync, Com_OSUtil, Math, Variants,
+uses Consts, Contnrs, Winsock, Com_Sync, Math, Variants,
   StrUtils;
+
+procedure RaiseOSError;
+begin
+  RaiseOSError(GetLastError);
+end;
+
+procedure RaiseOSError(err : Integer);
+var
+  Error: EOSError;
+begin
+  if err = 0 then
+    Exit;
+  Error := EOSError.Create(GetOSErrorMessage(err));
+  Error.ErrorCode := err;
+  SetLastError(err);
+  raise Error;
+end;
+
+function GetOSErrorMessage(ErrorCode : Integer) : String;
+begin
+  Result := TrimRight(SysErrorMessage(ErrorCode));
+  if Result = '' then
+    Result := TrimRight(Format(SOSError,[ErrorCode,'']));
+end;
 
 { TFileStream2 }
 
@@ -62,7 +90,6 @@ end;
 
 procedure TFileStream2.Flush;
 begin
-  OSCheck(FlushFileBuffers(Handle));
 end;
 
 { TTextStream }
