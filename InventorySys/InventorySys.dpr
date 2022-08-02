@@ -15,16 +15,7 @@ uses
   Com_OSUtil in '..\Common\Com_OSUtil.pas',
   Com_Streams in '..\Common\Com_Streams.pas',
   com_sync in '..\Common\com_sync.pas',
-  DataSetJSONConverter4D in '..\Common\DataSetJSONConverter4D.pas',
-  DataSetJSONConverter4D.Util in '..\Common\DataSetJSONConverter4D.Util.pas',
-  GenericDictionaryField in '..\Common\GenericDictionaryField.pas',
-  GenericListField in '..\Common\GenericListField.pas',
-  MarshallingUtils in '..\Common\MarshallingUtils.pas',
-  MarshalUnsupportedFields in '..\Common\MarshalUnsupportedFields.pas',
-  RttiUtils in '..\Common\RttiUtils.pas',
-  Strlib in '..\Common\Strlib.PAS',
   UnitDBXMetadataHelper in '..\Common\UnitDBXMetadataHelper.pas',
-  UnitDBXMetadataHelper2 in '..\Common\UnitDBXMetadataHelper2.pas',
   UnitDSServerDB in '..\Common\UnitDSServerDB.pas';
 
 {$R *.res}
