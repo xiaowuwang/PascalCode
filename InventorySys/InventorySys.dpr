@@ -4,7 +4,10 @@ uses
   Vcl.Forms,
   UnitInventoryMain in 'UnitInventoryMain.pas' {FormInventoryMain},
   UnitProduct in 'UnitProduct.pas',
-  UnitCustomer in 'UnitCustomer.pas';
+  UnitCustomer in 'UnitCustomer.pas',
+  UnitOrder in 'UnitOrder.pas',
+  UnitOrderItem in 'UnitOrderItem.pas',
+  UnitDataInterfaces in 'UnitDataInterfaces.pas';
 
 {$R *.res}
 
