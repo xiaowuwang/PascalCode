@@ -8,8 +8,7 @@ uses
   DbxInterbase, DbxClient, Dialogs, Data.DBXFirebird, Winapi.ShlObj;
 
 const
-  POSDB_NAME = 'SCSDATA.FDB';
-  CFGDB_NAME = 'SCSCFG.FDB';
+  DB_NAME = 'INVENTORY.FDB';
 
   SQLADDBLOBFIELD     :String ='ALTER TABLE EP2FILE ADD EP2TEXT BLOB SUB_TYPE TEXT CHARACTER SET WIN1252';
 
@@ -280,8 +279,6 @@ begin
   CreateGenerator(Provider, 'GEN_FRAMEID');
   CreateAutoIncTrigger(Provider, 'BI_FRAMEID', 'FRAME', 'FRAMEID', 'GEN_FRAMEID' );
 
-//  CreateTriggerForFrameComplete(Provider,'FRAMEDONETRIGER', 'FRAME', 'FRAMECOMPLETE');
-
   //JOBDETAIL
   //TABLE
   ATable := TDBXMetaDataTable.Create;
@@ -395,13 +392,10 @@ begin
   Provider.CreateTable(ATable);
   AddPrimaryKey(Provider, 'ITEMPRODUCTION', 'ITEMPRODUCTIONID');
   AddUniqueIndex(Provider, 'ITEMPRODUCTION', 'SITEID', 'ADDEDON', 'JOBID', 'FRAMEID', 'COPYID', 'ITEMNAME');
-
   // AUTO INC TRIGGER
   CreateGenerator(Provider, 'GEN_ITEMPRODUCTIONID');
   CreateAutoIncTrigger(Provider, 'BI_ITEMPRODUCTIONID', 'ITEMPRODUCTION', 'ITEMPRODUCTIONID', 'GEN_ITEMPRODUCTIONID');
-
   CreateTrigger(Provider, 'ITEMPRODUCTION', 'ITEMPRODUCTION');
-
   //CARD
   //TABLE
   ATable := TDBXMetaDataTable.Create;
@@ -518,7 +512,6 @@ begin
   AddPrimaryKey(Provider, 'LOG', 'LOGID');
   CreateGenerator(Provider, 'GEN_LOG_ID');
   CreateAutoIncTrigger(Provider, 'BI_LOGID', 'LOG' , 'LOGID', 'GEN_LOG_ID' );
-
   FreeAndNil(Provider);
   FreeAndNil(ATable);
 end;
@@ -529,7 +522,6 @@ var
 begin
   Comm := conn.DBXConnection.CreateCommand;
   try
-
     // Add blob ep2text field
     Comm.Text := SQLADDBLOBFIELD;
     Comm.ExecuteUpdate;
@@ -545,32 +537,6 @@ begin
                                             ,'0' ,'1', '0'
                                             , QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
     Comm.ExecuteQuery;
-
-//    Comm.Text := Format(SQLINSERTROLLFORMER, ['HQDEMO2', 'Demostration Michine 2'
-//                                            , 'ScotRF Panel', '300', 'SCS002', '0'
-//                                            ,'0' ,'1', '0'
-//                                            , QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
-//    Comm.ExecuteQuery;
-//    Comm.Text := Format(SQLINSERTROLLFORMER, ['HQDEMO3', 'Demostration Michine 3'
-//                                            , 'ScotRF Panel', '300', 'SCS003', '0'
-//                                            ,'0' ,'1', '0'
-//                                            , QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
-//    Comm.ExecuteQuery;
-//    Comm.Text := Format(SQLINSERTROLLFORMER, ['HQDEMO4', 'Demostration Michine 4'
-//                                            , 'ScotRF Panel', '300', 'SCS004', '0'
-//                                            ,'0' ,'1', '0'
-//                                            , QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
-//    Comm.ExecuteQuery;
-//    Comm.Text := Format(SQLINSERTROLLFORMER, ['HQDEMO5', 'Demostration Michine 5'
-//                                            , 'ScotRF Panel', '300', 'SCS005', '0'
-//                                            ,'0' ,'1', '0'
-//                                            , QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
-//    Comm.ExecuteQuery;
-//    Comm.Text := Format(SQLINSERTROLLFORMER, ['HQDEMO6', 'Demostration Michine 6'
-//                                            , 'ScotRF Panel', '300', 'SCS006', '0'
-//                                            ,'0' ,'1', '0'
-//                                            , QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
-//    Comm.ExecuteQuery;
 
     // Populate EMPLOYEE
     Comm.Text := Format(SqlInsertEMPLOYEE, ['1','1',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW)),'1'
