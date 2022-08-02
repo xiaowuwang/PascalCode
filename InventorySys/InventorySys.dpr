@@ -10,10 +10,10 @@ uses
   UnitDataInterfaces in 'UnitDataInterfaces.pas',
   UnitInventory in 'UnitInventory.pas',
   Com_Exception in '..\Common\Com_Exception.pas',
-  com_sync in '..\Common\com_sync.pas',
   UnitDBXMetadataHelper in '..\Common\UnitDBXMetadataHelper.pas',
   UnitDSServerDB in '..\Common\UnitDSServerDB.pas',
-  Com_Streams in '..\Common\Com_Streams.pas';
+  Com_Streams in '..\Common\Com_Streams.pas',
+  Com_Sync in '..\Common\Com_Sync.pas';
 
 {$R *.res}
 
