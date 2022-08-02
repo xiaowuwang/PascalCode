@@ -4,15 +4,20 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, UnitDSServerDB, Data.DBXFirebird,
-  Data.DB, Data.SqlExpr;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DBXFirebird,
+  Data.DB, Data.SqlExpr, UnitInventory, UnitDataInterfaces, Vcl.StdCtrls,
+  Vcl.ExtCtrls;
 
 type
   TFormInventoryMain = class(TForm)
-    SQLConnection1: TSQLConnection;
+    Panel1: TPanel;
+    ButtonAddProduct: TButton;
     procedure FormCreate(Sender: TObject);
+    procedure ButtonAddProductClick(Sender: TObject);
   private
     { Private declarations }
+    FConn      : IDataConnection;
+    FInventory : TInventory;
   public
     { Public declarations }
   end;
@@ -24,9 +29,23 @@ implementation
 
 {$R *.dfm}
 
+uses UnitFirebird, UnitProduct, UnitSQLite;
+
 procedure TFormInventoryMain.FormCreate(Sender: TObject);
 begin
-  InitialConnection(SQLConnection1, DB_NAME);
+  FConn := TInventoryFB.Create;
+//  FConn := TInventorySQLite.Create;
+  FConn.ConnectToDB;
+  FInventory := TInventory.create(FConn);
+end;
+
+procedure TFormInventoryMain.ButtonAddProductClick(Sender: TObject);
+var
+  aProduct : TProduct;
+begin
+  aProduct := TProduct.Create;
+  FInventory.AddProduct(aProduct);
+  Caption := 'Caption '+ IntToStr(FInventory.ProductCount);
 end;
 
 end.

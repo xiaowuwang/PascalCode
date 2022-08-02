@@ -108,6 +108,8 @@
         <DCCReference Include="..\Common\UnitDSServerDB.pas"/>
         <DCCReference Include="..\Common\Com_Streams.pas"/>
         <DCCReference Include="..\Common\Com_Sync.pas"/>
+        <DCCReference Include="UnitFirebird.pas"/>
+        <DCCReference Include="UnitSQLite.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

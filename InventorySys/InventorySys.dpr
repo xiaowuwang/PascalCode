@@ -13,7 +13,9 @@ uses
   UnitDBXMetadataHelper in '..\Common\UnitDBXMetadataHelper.pas',
   UnitDSServerDB in '..\Common\UnitDSServerDB.pas',
   Com_Streams in '..\Common\Com_Streams.pas',
-  Com_Sync in '..\Common\Com_Sync.pas';
+  Com_Sync in '..\Common\Com_Sync.pas',
+  UnitFirebird in 'UnitFirebird.pas',
+  UnitSQLite in 'UnitSQLite.pas';
 
 {$R *.res}
 
