@@ -16,9 +16,6 @@ type
   TFormInventoryMain = class(TForm)
     Panel1: TPanel;
     ButtonAddProduct: TButton;
-    SQLConnection1: TSQLConnection;
-    FDConnection1: TFDConnection;
-    FDPhysSQLiteDriverLink1: TFDPhysSQLiteDriverLink;
     procedure FormCreate(Sender: TObject);
     procedure ButtonAddProductClick(Sender: TObject);
   private
@@ -40,8 +37,8 @@ uses UnitFirebird, UnitProduct, UnitSQLite;
 
 procedure TFormInventoryMain.FormCreate(Sender: TObject);
 begin
-//  FConn := TInventoryFB.Create;
-  FConn := TInventorySQLite.Create;
+  FConn := TInventoryFB.Create;
+//  FConn := TInventorySQLite.Create;
   FConn.ConnectToDB;
   FInventory := TInventory.create(FConn);
 end;

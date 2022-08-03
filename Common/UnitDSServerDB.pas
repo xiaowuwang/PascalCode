@@ -57,7 +57,6 @@ const
                               ' Values ( %s, %s, %s, ''%s'', ''%s'' )';
 
 
-function InitialConnection(aConn: TSQLConnection; aDBName : String; aTag : SmallInt = 0) : SmallInt;
 function GetScotRFDatabaseDirectory: String;
 function GetServerDatabaseDirectory: String;
 
@@ -84,143 +83,6 @@ begin
   Result := Result + ChangeFileExt('ScotServer', '')+ '\';
   if not DirectoryExists(Result) then
     CreateDir(Result);
-end;
-
-procedure CreateSchema(conn: TSQLConnection);
-var
-  Provider    : TDBXDataExpressMetaDataProvider;
-  ATable      : TDBXMetaDataTable;
-begin
-  Provider := DBXGetMetaProvider(conn.DBXConnection);
-  //CUSTOMER
-  ATable := TDBXMetaDataTable.Create;
-  ATable.TableName := 'CUSTOMER';
-  AddInt32Column         (ATable, 'CUSTOMERID');
-  AddUnicodeVarCharColumn(ATable, 'FIRSTNAME', 20);
-  AddUnicodeVarCharColumn(ATable, 'LASTNAME', 20);
-  AddUnicodeVarCharColumn(ATable, 'GENDER', 20);
-  AddUnicodeVarCharColumn(ATable, 'EMAILADDRESS', 20);
-  AddUnicodeVarCharColumn(ATable, 'ADDRESS1', 20);
-  AddUnicodeVarCharColumn(ATable, 'ADDRESS2', 20);
-  AddUnicodeVarCharColumn(ATable, 'CITY', 20);
-  AddDateTimeColumn      (ATable, 'ADDEDON');
-  Provider.CreateTable(ATable);
-  AddPrimaryKey(Provider, 'CUSTOMER', 'CUSTOMERID');
-  CreateGenerator(Provider, 'GEN_CUSTOMER_ID');
-  CreateAutoIncTrigger(Provider, 'BI_CUSTOMERID', 'CUSTOMER' , 'CUSTOMERID', 'GEN_CUSTOMER_ID' );
-  //PRODUCT
-  ATable := TDBXMetaDataTable.Create;
-  ATable.TableName := 'PRODUCT';
-  AddInt32Column         (ATable, 'PRODUCTID');
-  AddUnicodeVarCharColumn(ATable, 'NAME', 20);
-  AddUnicodeVarCharColumn(ATable, 'DESCRIPTION', 50);
-  AddDoubleColumn        (ATable, 'PRICE');
-  AddInt8Column          (ATable, 'TAXTYPE');
-  AddDateTimeColumn      (ATable, 'ADDEDON');
-  Provider.CreateTable(ATable);
-  AddPrimaryKey(Provider, 'PRODUCT', 'PRODUCTID');
-  CreateGenerator(Provider, 'GEN_PRODUCT_ID');
-  CreateAutoIncTrigger(Provider, 'BI_PRODUCTID', 'PRODUCT' , 'PRODUCTID', 'GEN_PRODUCT_ID' );
-  //ORDER
-  ATable := TDBXMetaDataTable.Create;
-  ATable.TableName := 'ORDERS';
-  AddInt32Column         (ATable, 'ORDERID');
-  AddInt32Column         (ATable, 'CUSTOMERID');
-  AddDateTimeColumn      (ATable, 'ORDERDATE');
-  AddInt8Column          (ATable, 'STATUS');
-  AddInt8Column          (ATable, 'PAYMENTTYPE');
-  AddUnicodeVarCharColumn(ATable, 'TRACKINGNUMBER', 20);
-  AddDateTimeColumn      (ATable, 'ADDEDON');
-  Provider.CreateTable(ATable);
-  AddPrimaryKey(Provider, 'ORDERS', 'ORDERID');
-  CreateGenerator(Provider, 'GEN_ORDER_ID');
-  CreateAutoIncTrigger(Provider, 'BI_ORDERID', 'ORDERS' , 'ORDERID', 'GEN_ORDER_ID' );
-
-  //ORDERITEM
-  ATable := TDBXMetaDataTable.Create;
-  ATable.TableName := 'ORDERITEM';
-  AddInt32Column         (ATable, 'ORDERITEMID');
-  AddInt32Column         (ATable, 'ORDERID');
-  AddInt8Column          (ATable, 'ORDERLINE');
-  AddInt32Column         (ATable, 'PRODUCTID');
-  AddInt32Column         (ATable, 'QUANTITY');
-  AddDoubleColumn        (ATable, 'UNITPRICE');
-  AddInt8Column          (ATable, 'TAXTYPE');
-  AddDateTimeColumn      (ATable, 'ADDEDON');
-  Provider.CreateTable(ATable);
-  AddPrimaryKey(Provider, 'ORDERITEM', 'ORDERITEMID');
-  CreateGenerator(Provider, 'GEN_ORDERITEM_ID');
-  CreateAutoIncTrigger(Provider, 'BI_ORDERITEMID', 'ORDERITEM' , 'ORDERITEMID', 'GEN_ORDERITEM_ID' );
-
-  //////////////////////////////////////////////////////////////////////////////
-  //EMPLOYEES
-  ATable := TDBXMetaDataTable.Create;
-  ATable.TableName := 'EMPLOYEE';
-  AddInt32Column         (ATable, 'EMPLOYEEID');
-  AddInt8Column          (ATable, 'STORENO');
-  AddInt32Column         (ATable, 'STOREEMPLOYEEID');
-  AddDateTimeColumn      (ATable, 'ADDEDON');
-  AddInt8Column          (ATable, 'TYPEID');
-  AddInt8Column          (ATable, 'STATUSID');
-  AddUnicodeVarCharColumn(ATable, 'CODE', 10);
-  AddUnicodeVarCharColumn(ATable, 'FIRSTNAME', 30);
-  AddUnicodeVarCharColumn(ATable, 'LASTNAME', 30);
-  AddUnicodeVarCharColumn(ATable, 'EMAIL', 30);
-  AddUnicodeVarCharColumn(ATable, 'PHONE', 30);
-  AddInt32Column         (ATable, 'ADDRESSID');
-  AddInt8Column          (ATable, 'DEPARTMENTID');
-  AddUnicodeVarCharColumn(ATable, 'PASSWORD', 30);
-  AddDateColumn          (ATable, 'DOB', TRUE);
-  AddDoubleColumn        (ATable, 'SALARY');
-  AddInt8Column          (ATable, 'GENDER');
-  Provider.CreateTable(ATable);
-  AddPrimaryKey(Provider, 'EMPLOYEE', 'EMPLOYEEID');
-  AddUniqueIndex(Provider, 'EMPLOYEE', 'STORENO', 'ADDEDON', 'STOREEMPLOYEEID');
-  // AUTO INC TRIGGER
-  CreateGenerator(Provider, 'GEN_EMPLOYEE_ID');
-  CreateAutoIncTrigger(Provider, 'BI_EMPLOYEEID', 'EMPLOYEE', 'EMPLOYEEID', 'GEN_EMPLOYEE_ID' );
-  //MODROLES
-  ATable := TDBXMetaDataTable.Create;
-  ATable.TableName := 'MODROLE';
-  AddInt32Column         (ATable, 'MODROLEID');
-  AddDateTimeColumn      (ATable, 'ADDEDON');
-  AddInt8Column          (ATable, 'TYPEID');
-  AddInt8Column          (ATable, 'STATUSID');
-  AddUnicodeVarCharColumn(ATable, 'APPLYTO', 30);
-  AddUnicodeVarCharColumn(ATable, 'AUTHROLE', 30);
-  AddUnicodeVarCharColumn(ATable, 'DENIEDROLE', 30);
-  Provider.CreateTable(ATable);
-  AddPrimaryKey(Provider, 'MODROLE', 'MODROLEID');
-  // AUTO INC TRIGGER
-  CreateGenerator(Provider, 'GEN_MODROLE_ID');
-  CreateAutoIncTrigger(Provider, 'BI_MODROLEID', 'MODROLE', 'MODROLEID', 'GEN_MODROLE_ID' );
-  //USERROLES
-  ATable := TDBXMetaDataTable.Create;
-  ATable.TableName := 'USERROLE';
-  AddInt32Column         (ATable, 'USERROLEID');
-  AddDateTimeColumn      (ATable, 'ADDEDON');
-  AddInt8Column          (ATable, 'TYPEID');
-  AddInt8Column          (ATable, 'STATUSID');
-  AddUnicodeVarCharColumn(ATable, 'USERS', 30);
-  AddUnicodeVarCharColumn(ATable, 'ROLES', 30);
-  Provider.CreateTable(ATable);
-  AddPrimaryKey(Provider, 'USERROLE', 'USERROLEID');
-  // AUTO INC TRIGGER
-  CreateGenerator(Provider, 'GEN_USERROLE_ID');
-  CreateAutoIncTrigger(Provider, 'BI_USERROLEID', 'USERROLE', 'USERROLEID', 'GEN_USERROLE_ID' );
-  // Log
-  ATable := TDBXMetaDataTable.Create;
-  ATable.TableName := 'LOG';
-  AddInt32Column         (ATable, 'LOGID');
-  AddUnicodeVarCharColumn(ATable, 'IP_ADDRESS', 20);
-  AddUnicodeVarCharColumn(ATable, 'EVENT', 50);
-  AddDateTimeColumn      (ATable, 'CREATED');
-  Provider.CreateTable(ATable);
-  AddPrimaryKey(Provider, 'LOG', 'LOGID');
-  CreateGenerator(Provider, 'GEN_LOG_ID');
-  CreateAutoIncTrigger(Provider, 'BI_LOGID', 'LOG' , 'LOGID', 'GEN_LOG_ID' );
-  FreeAndNil(Provider);
-  FreeAndNil(ATable);
 end;
 
 procedure PopulateData(conn: TSQLConnection);
@@ -268,47 +130,6 @@ begin
     Comm.ExecuteQuery;
   finally
     Comm.Free;
-  end;
-end;
-
-procedure CreateCFGSchema(conn: TSQLConnection);
-var
-  Provider    : TDBXDataExpressMetaDataProvider;
-  ATable      : TDBXMetaDataTable;
-begin
-  Provider := DBXGetMetaProvider(conn.DBXConnection);
-  ATable := TDBXMetaDataTable.Create;
-  ATable.TableName := 'SETTINGS';
-  AddUnicodeVarCharColumn(ATable, 'SETTINGKEY', 128);
-  AddInt32Column         (ATable, 'SETTINGHASH');
-  AddInt8Column          (ATable, 'DATATYPE');
-  AddUnicodeVarCharColumn(ATable, 'SETTINGVALUE', 200, True);
-  AddInt8Column          (ATable, 'SETTINGTYPE');
-  Provider.CreateTable(ATable);
-  AddPrimaryKey(Provider, 'SETTINGS', 'SETTINGKEY');
-  FreeAndNil(Provider);
-  FreeAndNil(ATable);
-end;
-
-function InitialConnection(aConn: TSQLConnection; aDBName : String; aTag : SmallInt = 0) : SmallInt;
-begin
-  try
-    Result := InitConnection(aConn, aDBName);
-    if (Result=0) then
-    begin
-      if aTag=0 then
-      begin
-        CreateSchema(aConn);
-        PopulateData(aConn);
-      end
-      else
-      begin
-        CreateCFGSchema(aConn);
-      end;
-    end
-  except
-    on E: Exception do
-      HandleException(e,'InitialConnection',[]);
   end;
 end;
 

@@ -32,27 +32,4 @@ object FormInventoryMain: TFormInventoryMain
       OnClick = ButtonAddProductClick
     end
   end
-  object SQLConnection1: TSQLConnection
-    DriverName = 'Sqlite'
-    Params.Strings = (
-      'DriverUnit=Data.DbxSqlite'
-      
-        'DriverPackageLoader=TDBXSqliteDriverLoader,DBXSqliteDriver260.bp' +
-        'l'
-      
-        'MetaDataPackageLoader=TDBXSqliteMetaDataCommandFactory,DbxSqlite' +
-        'Driver260.bpl'
-      'FailIfMissing=True'
-      'Database=')
-    Left = 512
-    Top = 296
-  end
-  object FDConnection1: TFDConnection
-    Left = 632
-    Top = 280
-  end
-  object FDPhysSQLiteDriverLink1: TFDPhysSQLiteDriverLink
-    Left = 496
-    Top = 400
-  end
 end
