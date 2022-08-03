@@ -10,7 +10,7 @@ uses
 const
   DB_NAME = 'INVENTORY.FDB';
 
-  SQLADDBLOBFIELD     :String ='ALTER TABLE EP2FILE ADD EP2TEXT BLOB SUB_TYPE TEXT CHARACTER SET WIN1252';
+  SQLADDBLOBFIELD     :String ='ALTER TABLE EMPLOYEE ADD PICTURE BLOB SUB_TYPE TEXT CHARACTER SET WIN1252';
 
   SQLINSERTSITE       :String ='Insert Into SITE (NAME, ADDRESS, SUBURB, CITY ' +
                                ', CODE, COUNTRY, STATUSID, ADDEDON ) ' +
@@ -92,351 +92,65 @@ var
   ATable      : TDBXMetaDataTable;
 begin
   Provider := DBXGetMetaProvider(conn.DBXConnection);
-
-  //Audit
+  //CUSTOMER
   ATable := TDBXMetaDataTable.Create;
-  ATable.TableName := 'AUDIT';
-  AddInt32Column         (ATable, 'AUDITID');
-  AddInt8Column          (ATable, 'EVENTTYPE');
-  AddUnicodeVarCharColumn(ATable, 'EVENT', 150);
-  AddUnicodeVarCharColumn(ATable, 'CARDNUMBER', 20);
-  AddDoubleColumn        (ATable, 'REMAINMETERS');
-  AddInt32Column         (ATable, 'SITEID');
-  AddInt32Column         (ATable, 'ROLLFORMERID');
-  AddInt8Column          (ATable, 'STATUSID');
-  AddDateTimeColumn      (ATable, 'ADDEDON');
-  Provider.CreateTable(ATable);
-  AddPrimaryKey(Provider, 'AUDIT', 'AUDITID');
-  CreateGenerator(Provider, 'GEN_AUDIT_ID');
-  CreateAutoIncTrigger(Provider, 'BI_AUDITID', 'AUDIT' , 'AUDITID', 'GEN_AUDIT_ID' );
-
-  //RFOPERATION
-  ATable := TDBXMetaDataTable.Create;
-  ATable.TableName := 'RFOPERATION';
-  AddInt32Column         (ATable, 'RFOPERATIONID');
-  AddInt8Column          (ATable, 'RFOPERATION');
-  AddUnicodeVarCharColumn(ATable, 'DESCRIPTION', 150);
-  AddInt32Column         (ATable, 'SITEID');
-  AddInt32Column         (ATable, 'ROLLFORMERID');
-  AddInt8Column          (ATable, 'STATUSID');
-  AddDateTimeColumn      (ATable, 'ADDEDON');
-  Provider.CreateTable(ATable);
-  AddPrimaryKey(Provider, 'RFOPERATION', 'RFOPERATIONID');
-  AddUniqueIndex(Provider, 'RFOPERATION', 'SITEID', 'ADDEDON', 'ROLLFORMERID', 'RFOPERATIONID');
-  CreateGenerator(Provider, 'GEN_RFOPERATION_ID');
-  CreateAutoIncTrigger(Provider, 'BI_RFOPERATIONID', 'RFOPERATION' , 'RFOPERATIONID', 'GEN_RFOPERATION_ID' );
-
-  //SITE
-  //TABLE
-  ATable := TDBXMetaDataTable.Create;
-  ATable.TableName := 'SITE';
-  AddInt32Column         (ATable, 'SITEID');
-  AddUnicodeVarCharColumn(ATable, 'NAME', 20);
-  AddUnicodeVarCharColumn(ATable, 'ADDRESS', 20);
-  AddUnicodeVarCharColumn(ATable, 'SUBURB', 20);
+  ATable.TableName := 'CUSTOMER';
+  AddInt32Column         (ATable, 'CUSTOMERID');
+  AddUnicodeVarCharColumn(ATable, 'FIRSTNAME', 20);
+  AddUnicodeVarCharColumn(ATable, 'LASTNAME', 20);
+  AddUnicodeVarCharColumn(ATable, 'GENDER', 20);
+  AddUnicodeVarCharColumn(ATable, 'EMAILADDRESS', 20);
+  AddUnicodeVarCharColumn(ATable, 'ADDRESS1', 20);
+  AddUnicodeVarCharColumn(ATable, 'ADDRESS2', 20);
   AddUnicodeVarCharColumn(ATable, 'CITY', 20);
-  AddUnicodeVarCharColumn(ATable, 'CODE', 20);
-  AddUnicodeVarCharColumn(ATable, 'COUNTRY', 20);
-  AddInt8Column          (ATable, 'STATUSID');
   AddDateTimeColumn      (ATable, 'ADDEDON');
   Provider.CreateTable(ATable);
-  // PRIMARY AND UNIQUE KEY
-  AddPrimaryKey(Provider, 'SITE', 'SITEID');
-  AddUniqueIndex(Provider, 'SITE', 'NAME');
-  // AUTO INC TRIGGER
-  CreateGenerator(Provider, 'GEN_SITEID');
-  CreateAutoIncTrigger(Provider, 'BI_SITEID', 'SITE', 'SITEID', 'GEN_SITEID' );
-
-  //ROLLFORMER
-  //TABLE
+  AddPrimaryKey(Provider, 'CUSTOMER', 'CUSTOMERID');
+  CreateGenerator(Provider, 'GEN_CUSTOMER_ID');
+  CreateAutoIncTrigger(Provider, 'BI_CUSTOMERID', 'CUSTOMER' , 'CUSTOMERID', 'GEN_CUSTOMER_ID' );
+  //PRODUCT
   ATable := TDBXMetaDataTable.Create;
-  ATable.TableName := 'ROLLFORMER';
-  AddInt32Column         (ATable, 'ROLLFORMERID');
+  ATable.TableName := 'PRODUCT';
+  AddInt32Column         (ATable, 'PRODUCTID');
   AddUnicodeVarCharColumn(ATable, 'NAME', 20);
   AddUnicodeVarCharColumn(ATable, 'DESCRIPTION', 50);
-  AddUnicodeVarCharColumn(ATable, 'PROGRAM', 20);
-  AddUnicodeVarCharColumn(ATable, 'VERSION', 20);
-  AddUnicodeVarCharColumn(ATable, 'CODE', 20);
-  AddDoubleColumn        (ATable, 'PRODUCTION');
-  AddInt8Column          (ATable, 'RFTYPEID');
-  AddInt8Column          (ATable, 'STATUSID');
-  AddInt32Column         (ATable, 'SITEID');
+  AddDoubleColumn        (ATable, 'PRICE');
+  AddInt8Column          (ATable, 'TAXTYPE');
   AddDateTimeColumn      (ATable, 'ADDEDON');
   Provider.CreateTable(ATable);
-  // PRIMARY AND UNIQUE KEY
-  AddPrimaryKey(Provider, 'ROLLFORMER', 'ROLLFORMERID');
-  AddUniqueIndex(Provider, 'ROLLFORMER', 'NAME');
-  // AUTO INC TRIGGER
-  CreateGenerator(Provider, 'GEN_ROLLFORMERID');
-  CreateAutoIncTrigger(Provider, 'BI_ROLLFORMERID', 'ROLLFORMER', 'ROLLFORMERID', 'GEN_ROLLFORMERID' );
-
-  //RFDATEINFO
-  //TABLE
+  AddPrimaryKey(Provider, 'PRODUCT', 'PRODUCTID');
+  CreateGenerator(Provider, 'GEN_PRODUCT_ID');
+  CreateAutoIncTrigger(Provider, 'BI_PRODUCTID', 'PRODUCT' , 'PRODUCTID', 'GEN_PRODUCT_ID' );
+  //ORDER
   ATable := TDBXMetaDataTable.Create;
-  ATable.TableName := 'RFDATEINFO';
-  AddInt32Column         (ATable, 'RFDATEINFOID');
-  AddDateColumn          (ATable, 'RFINFODATE');
-  AddInt32Column         (ATable, 'ROLLFORMERID');
-  AddUnicodeVarCharColumn(ATable, 'CARDNUMBER', 20);
-  AddDoubleColumn        (ATable, 'ORIGINMETERS');
-  AddDoubleColumn        (ATable, 'REMAINMETERS');
-  AddInt32Column         (ATable, 'RUNSECONDS');
-  AddInt32Column         (ATable, 'PAUSETIME');
-  AddDoubleColumn        (ATable, 'METERS');
-  AddInt32Column         (ATable, 'CUTS');
-  AddInt32Column         (ATable, 'SWAGE');
-  AddInt32Column         (ATable, 'NOTCH');
-  AddInt32Column         (ATable, 'FLAT');
-  AddInt32Column         (ATable, 'FPUNCH');
-  AddInt8Column          (ATable, 'RFTYPEID');
-  AddInt8Column          (ATable, 'STATUSID');
-  AddInt32Column         (ATable, 'SITEID');
+  ATable.TableName := 'ORDERS';
+  AddInt32Column         (ATable, 'ORDERID');
+  AddInt32Column         (ATable, 'CUSTOMERID');
+  AddDateTimeColumn      (ATable, 'ORDERDATE');
+  AddInt8Column          (ATable, 'STATUS');
+  AddInt8Column          (ATable, 'PAYMENTTYPE');
+  AddUnicodeVarCharColumn(ATable, 'TRACKINGNUMBER', 20);
   AddDateTimeColumn      (ATable, 'ADDEDON');
   Provider.CreateTable(ATable);
-  // PRIMARY AND UNIQUE KEY
-  AddPrimaryKey(Provider, 'RFDATEINFO', 'RFDATEINFOID');
-  AddUniqueIndex(Provider, 'RFDATEINFO', 'SITEID', 'RFINFODATE', 'ROLLFORMERID', 'CARDNUMBER');
-  // AUTO INC TRIGGER
-  CreateGenerator(Provider, 'GEN_RFDATEINFOID');
-  CreateAutoIncTrigger(Provider, 'BI_RFDATEINFOID', 'RFDATEINFO', 'RFDATEINFOID', 'GEN_RFDATEINFOID' );
+  AddPrimaryKey(Provider, 'ORDERS', 'ORDERID');
+  CreateGenerator(Provider, 'GEN_ORDER_ID');
+  CreateAutoIncTrigger(Provider, 'BI_ORDERID', 'ORDERS' , 'ORDERID', 'GEN_ORDER_ID' );
 
-  //JOB
-  //TABLE
+  //ORDERITEM
   ATable := TDBXMetaDataTable.Create;
-  ATable.TableName := 'JOB';
-  AddInt32Column         (ATable, 'JOBID');
-  AddUnicodeVarCharColumn(ATable, 'DESIGN', 150);
-  AddUnicodeVarCharColumn(ATable, 'STEEL', 100);
-  AddInt8Column          (ATable, 'ITEMTYPEID');
-  AddUnicodeVarCharColumn(ATable, 'ITEMTYPE', 50);
-  AddInt8Column          (ATable, 'FRAMECOPIES');
-  AddInt8Column          (ATable, 'STARTMEMBER');
-  AddInt32Column         (ATable, 'LASTMEMBER');
-  AddUnicodeVarCharColumn(ATable, 'FILEPATH', 150);
-  AddInt8Column          (ATable, 'RFTYPEID');
-  AddInt8Column          (ATable, 'STATUSID');
-  AddInt32Column         (ATable, 'SITEID');
+  ATable.TableName := 'ORDERITEM';
+  AddInt32Column         (ATable, 'ORDERITEMID');
+  AddInt32Column         (ATable, 'ORDERID');
+  AddInt8Column          (ATable, 'ORDERLINE');
+  AddInt32Column         (ATable, 'PRODUCTID');
+  AddInt32Column         (ATable, 'QUANTITY');
+  AddDoubleColumn        (ATable, 'UNITPRICE');
+  AddInt8Column          (ATable, 'TAXTYPE');
   AddDateTimeColumn      (ATable, 'ADDEDON');
   Provider.CreateTable(ATable);
-  // PRIMARY AND UNIQUE KEY
-  AddPrimaryKey(Provider, 'JOB', 'JOBID');
-  AddUniqueIndex(Provider, 'JOB', 'ADDEDON', 'JOBID', 'DESIGN');
-  // AUTO INC TRIGGER
-  CreateGenerator(Provider, 'GEN_JOBID');
-  CreateAutoIncTrigger(Provider, 'BI_JOBID', 'JOB', 'JOBID', 'GEN_JOBID' );
-
-  //EP2FILE
-  ATable := TDBXMetaDataTable.Create;
-  ATable.TableName := 'EP2FILE';
-  AddInt32Column         (ATable, 'EP2FILEID');
-  AddInt8Column          (ATable, 'RFTYPEID');
-  AddUnicodeVarCharColumn(ATable, 'EP2FILE', 150);
-//  AddBlobColumn          (ATable, 'EP2TEXT');
-  AddInt8Column          (ATable, 'STATUSID');
-  AddInt32Column         (ATable, 'JOBID');
-  AddInt8Column          (ATable, 'SITEID');
-  AddDateTimeColumn      (ATable, 'ADDEDON');
-  Provider.CreateTable(ATable);
-  AddPrimaryKey(Provider, 'EP2FILE', 'EP2FILEID');
-  AddUniqueIndex(Provider, 'EP2FILE', 'SITEID', 'JOBID', 'EP2FILE');
-  // AUTO INC TRIGGER
-  CreateGenerator(Provider, 'GEN_EP2FILEID');
-  CreateAutoIncTrigger(Provider, 'BI_EP2FILEID', 'EP2FILE', 'EP2FILEID', 'GEN_EP2FILEID' );
-
-  //Frame
-  ATable := TDBXMetaDataTable.Create;
-  ATable.TableName := 'FRAME';
-  AddInt32Column         (ATable, 'FRAMEID');
-  AddUnicodeVarCharColumn(ATable, 'FRAMENAME', 20);
-  AddInt32Column         (ATable, 'EP2FILEID');
-  AddInt32Column         (ATable, 'JOBID');
-  AddDoubleColumn        (ATable, 'MINHOLEDISTANCE');
-  AddDoubleColumn        (ATable, 'PROFILEHEIGHT');
-  AddDoubleColumn        (ATable, 'PRECAMBER');
-  AddInt8Column          (ATable, 'NUMBEROFFRAMES');
-  AddInt8Column          (ATable, 'PRODUCEDFRAMES');
-  AddInt8Column          (ATable, 'ITEMCOUNT');
-  AddDoubleColumn        (ATable, 'PLATEYMIN');
-  AddDoubleColumn        (ATable, 'PLATEYMAX');
-  AddDoubleColumn        (ATable, 'XMIN');
-  AddDoubleColumn        (ATable, 'XMAX');
-  AddDoubleColumn        (ATable, 'YMIN');
-  AddDoubleColumn        (ATable, 'YMAX');
-  AddInt8Column          (ATable, 'CONNECTIONCOUNT');
-  AddInt8Column          (ATable, 'CONNECTORS');
-  AddInt8Column          (ATable, 'TEKSCREWS');
-  AddInt8Column          (ATable, 'SPACERS');
-  AddUnicodeVarCharColumn(ATable, 'EP2FILE', 150);
-  AddInt8Column          (ATable, 'RFTYPEID');
-  AddInt8Column          (ATable, 'STATUSID');
-  AddInt8Column          (ATable, 'SITEID');
-  AddDateTimeColumn      (ATable, 'ADDEDON');
-  Provider.CreateTable(ATable);
-  AddPrimaryKey(Provider, 'FRAME', 'FRAMEID');
-  AddUniqueIndex(Provider, 'FRAME', 'SITEID', 'ADDEDON', 'JOBID', 'EP2FILEID', 'FRAMEID');
-
-  // AUTO INC TRIGGER
-  CreateGenerator(Provider, 'GEN_FRAMEID');
-  CreateAutoIncTrigger(Provider, 'BI_FRAMEID', 'FRAME', 'FRAMEID', 'GEN_FRAMEID' );
-
-  //JOBDETAIL
-  //TABLE
-  ATable := TDBXMetaDataTable.Create;
-  ATable.TableName := 'JOBDETAIL';
-  AddInt32Column         (ATable, 'JOBDETAILID');
-  AddInt32Column         (ATable, 'JOBID');
-  AddInt32Column         (ATable, 'EP2FILEID');
-  AddInt8Column          (ATable, 'RFTYPEID');
-  AddInt32Column         (ATable, 'FRAMEID');
-  AddUnicodeVarCharColumn(ATable, 'DESIGN', 150, TRUE);
-  AddUnicodeVarCharColumn(ATable, 'STEEL', 100, TRUE);
-  AddUnicodeVarCharColumn(ATable, 'OPERATOR', 100, TRUE);
-  AddUnicodeVarCharColumn(ATable, 'RIVERTER', 150, TRUE);
-  AddUnicodeVarCharColumn(ATable, 'COILID', 100, TRUE);
-  AddUnicodeVarCharColumn(ATable, 'GAUGE', 100, TRUE);
-  AddUnicodeVarCharColumn(ATable, 'WEIGHT', 100, TRUE);
-  AddInt8Column          (ATable, 'STATUSID');
-  AddInt32Column         (ATable, 'SITEID');
-  AddDateTimeColumn      (ATable, 'ADDEDON');
-  Provider.CreateTable(ATable);
-  // PRIMARY AND UNIQUE KEY
-  AddPrimaryKey(Provider, 'JOBDETAIL', 'JOBDETAILID');
-//  AddUniqueIndex(Provider, 'JOBDETAIL', 'ADDEDON', 'JOBID', 'EP2FILEID','FRAMEID');
-  // AUTO INC TRIGGER
-  CreateGenerator(Provider, 'GEN_JOBDETAILID');
-  CreateAutoIncTrigger(Provider, 'BI_JOBDETAILID', 'JOBDETAIL', 'JOBDETAILID', 'GEN_JOBDETAILID' );
-
-  //FRAMEENTITY
-  ATable := TDBXMetaDataTable.Create;
-  ATable.TableName := 'FRAMEENTITY';
-  AddInt32Column         (ATable, 'FRAMEENTITYID');
-  AddUnicodeVarCharColumn(ATable, 'ITEMNAME', 20);
-  AddInt32Column         (ATable, 'FRAMEID');
-  AddUnicodeVarCharColumn(ATable, 'FRAMENAME', 20);
-  AddUnicodeVarCharColumn(ATable, 'FRAMETYPE', 20);
-  AddInt32Column         (ATable, 'ID');
-  AddInt32Column         (ATable, 'JOBID');
-  AddDoubleColumn        (ATable, 'POINT1X');
-  AddDoubleColumn        (ATable, 'POINT1Y');
-  AddDoubleColumn        (ATable, 'POINT2X');
-  AddDoubleColumn        (ATable, 'POINT2Y');
-  AddDoubleColumn        (ATable, 'POINT3X');
-  AddDoubleColumn        (ATable, 'POINT3Y');
-  AddDoubleColumn        (ATable, 'POINT4X');
-  AddDoubleColumn        (ATable, 'POINT4Y');
-  AddDoubleColumn        (ATable, 'LENGTH');
-  AddDoubleColumn        (ATable, 'WEB');
-  AddInt32Column         (ATable, 'COL');
-  AddInt32Column         (ATable, 'OPCOUNT');
-  AddInt8Column          (ATable, 'ORIENTATION');
-  AddInt8Column          (ATable, 'NONRF');
-  AddInt8Column          (ATable, 'ISFACINGITEM');
-  AddInt8Column          (ATable, 'RFTYPEID');
-  AddInt8Column          (ATable, 'STATUSID');
-  AddInt32Column         (ATable, 'SITEID');
-  AddDateTimeColumn      (ATable, 'ADDEDON');
-  Provider.CreateTable(ATable);
-  AddPrimaryKey(Provider, 'FRAMEENTITY', 'FRAMEENTITYID');
-  AddUniqueIndex(Provider, 'FRAMEENTITY', 'SITEID', 'ADDEDON', 'JOBID', 'FRAMEID','ITEMNAME');
-
-  // AUTO INC TRIGGER
-  CreateGenerator(Provider, 'GEN_FRAMEENTITYID');
-  CreateAutoIncTrigger(Provider, 'BI_FRAMEENTITYID', 'FRAMEENTITY', 'FRAMEENTITYID', 'GEN_FRAMEENTITYID' );
-
-  //THINGSONFRAMEENTITY
-  ATable := TDBXMetaDataTable.Create;
-  ATable.TableName := 'THINGSONFRAMEENTITY';
-  AddInt32Column         (ATable, 'THINGSONFRAMEENTITYID');
-  AddInt32Column         (ATable, 'FRAMEID');
-  AddInt32Column         (ATable, 'FRAMEENTITYID');
-  AddInt8Column          (ATable, 'THINGSTYPE');
-  AddInt8Column          (ATable, 'OPKIND');
-  AddDoubleColumn        (ATable, 'POINTX');
-  AddDoubleColumn        (ATable, 'POINTY');
-  AddDoubleColumn        (ATable, 'NUM');
-  AddDoubleColumn        (ATable, 'POS');
-  AddInt8Column          (ATable, 'STATUSID');
-  AddInt8Column          (ATable, 'RFTYPEID');
-  AddInt32Column         (ATable, 'SITEID');
-  AddDateTimeColumn      (ATable, 'ADDEDON');
-  Provider.CreateTable(ATable);
-  AddPrimaryKey(Provider, 'THINGSONFRAMEENTITY', 'THINGSONFRAMEENTITYID');
-  AddUniqueIndex(Provider, 'THINGSONFRAMEENTITY', 'SITEID', 'FRAMEID', 'THINGSONFRAMEENTITYID');
-  // AUTO INC TRIGGER
-  CreateGenerator(Provider, 'GEN_THINGSONFRAMEENTITYID');
-  CreateAutoIncTrigger(Provider, 'BI_THINGSONFRAMEENTITYID', 'THINGSONFRAMEENTITY', 'THINGSONFRAMEENTITYID', 'GEN_THINGSONFRAMEENTITYID' );
-
-  //ITEMPRODUCTION
-  ATable := TDBXMetaDataTable.Create;
-  ATable.TableName := 'ITEMPRODUCTION';
-  AddInt32Column         (ATable, 'ITEMPRODUCTIONID');
-  AddInt32Column         (ATable, 'FRAMEID');
-  AddInt32Column         (ATable, 'JOBID');
-  AddInt32Column         (ATable, 'ID');
-  AddInt8Column          (ATable, 'COPYID');
-  AddUnicodeVarCharColumn(ATable, 'TRUSSNAME', 20);
-  AddUnicodeVarCharColumn(ATable, 'ITEMNAME', 20);
-  AddUnicodeVarCharColumn(ATable, 'CARDNUMBER', 20);
-  AddDoubleColumn        (ATable, 'ITEMLENGTH');
-  AddInt8Column          (ATable, 'ISLAST');
-  AddInt32Column         (ATable, 'SERIALNUMBER');
-  AddInt8Column          (ATable, 'ISBOXWEB');
-  AddInt8Column          (ATable, 'ISBOXWEBDOUBLE');
-  AddInt8Column          (ATable, 'SCREWCOUNT', True);
-  AddInt8Column          (ATable, 'SPACERCOUNT', True);
-  AddInt8Column          (ATable, 'STATUSID');
-  AddInt8Column          (ATable, 'RFTYPEID');
-  AddInt32Column         (ATable, 'SITEID');
-  AddInt32Column         (ATable, 'ROLLFORMERID');
-  AddDateTimeColumn      (ATable, 'ADDEDON');
-  Provider.CreateTable(ATable);
-  AddPrimaryKey(Provider, 'ITEMPRODUCTION', 'ITEMPRODUCTIONID');
-  AddUniqueIndex(Provider, 'ITEMPRODUCTION', 'SITEID', 'ADDEDON', 'JOBID', 'FRAMEID', 'COPYID', 'ITEMNAME');
-  // AUTO INC TRIGGER
-  CreateGenerator(Provider, 'GEN_ITEMPRODUCTIONID');
-  CreateAutoIncTrigger(Provider, 'BI_ITEMPRODUCTIONID', 'ITEMPRODUCTION', 'ITEMPRODUCTIONID', 'GEN_ITEMPRODUCTIONID');
-  CreateTrigger(Provider, 'ITEMPRODUCTION', 'ITEMPRODUCTION');
-  //CARD
-  //TABLE
-  ATable := TDBXMetaDataTable.Create;
-  ATable.TableName := 'CARD';
-  AddInt32Column         (ATable, 'CARDID');
-  AddUnicodeVarCharColumn(ATable, 'CARDNUMBER', 20);
-  AddUnicodeVarCharColumn(ATable, 'DESCRIPTION', 50);
-  AddInt8Column          (ATable, 'TYPE');
-  AddDoubleColumn        (ATable, 'METERS');
-  AddDoubleColumn        (ATable, 'REMAINING');
-  AddInt8Column          (ATable, 'STATUSID');
-  AddInt32Column         (ATable, 'SITEID');
-  AddDateTimeColumn      (ATable, 'ADDEDON');
-  Provider.CreateTable(ATable);
-  // PRIMARY AND UNIQUE KEY
-  AddPrimaryKey(Provider, 'CARD', 'CARDID');
-  AddUniqueIndex(Provider, 'CARD', 'ADDEDON', 'CARDNUMBER');
-  // AUTO INC TRIGGER
-  CreateGenerator(Provider, 'GEN_CARDID');
-  CreateAutoIncTrigger(Provider, 'BI_CARDID', 'CARD', 'CARDID', 'GEN_CARDID' );
-
-  //COIL
-  //TABLE
-  ATable := TDBXMetaDataTable.Create;
-  ATable.TableName := 'COIL';
-  AddInt32Column         (ATable, 'COILID');
-  AddUnicodeVarCharColumn(ATable, 'COILNUMBER', 20);
-  AddUnicodeVarCharColumn(ATable, 'DESCRIPTION', 50);
-  AddUnicodeVarCharColumn(ATable, 'GAUGE', 20);
-  AddInt8Column          (ATable, 'TYPE');
-  AddDoubleColumn        (ATable, 'WEIGHT');
-  AddInt8Column          (ATable, 'STATUSID');
-  AddInt32Column         (ATable, 'SITEID');
-  AddDateTimeColumn      (ATable, 'ADDEDON');
-  Provider.CreateTable(ATable);
-  // PRIMARY AND UNIQUE KEY
-  AddPrimaryKey(Provider, 'COIL', 'COILID');
-  AddUniqueIndex(Provider, 'COIL', 'ADDEDON', 'COILNUMBER');
-  // AUTO INC TRIGGER
-  CreateGenerator(Provider, 'GEN_COILID');
-  CreateAutoIncTrigger(Provider, 'BI_COILID', 'COIL', 'COILID', 'GEN_COILID' );
+  AddPrimaryKey(Provider, 'ORDERITEM', 'ORDERITEMID');
+  CreateGenerator(Provider, 'GEN_ORDERITEM_ID');
+  CreateAutoIncTrigger(Provider, 'BI_ORDERITEMID', 'ORDERITEM' , 'ORDERITEMID', 'GEN_ORDERITEM_ID' );
 
   //////////////////////////////////////////////////////////////////////////////
   //EMPLOYEES
@@ -462,11 +176,9 @@ begin
   Provider.CreateTable(ATable);
   AddPrimaryKey(Provider, 'EMPLOYEE', 'EMPLOYEEID');
   AddUniqueIndex(Provider, 'EMPLOYEE', 'STORENO', 'ADDEDON', 'STOREEMPLOYEEID');
-
   // AUTO INC TRIGGER
   CreateGenerator(Provider, 'GEN_EMPLOYEE_ID');
   CreateAutoIncTrigger(Provider, 'BI_EMPLOYEEID', 'EMPLOYEE', 'EMPLOYEEID', 'GEN_EMPLOYEE_ID' );
-
   //MODROLES
   ATable := TDBXMetaDataTable.Create;
   ATable.TableName := 'MODROLE';
@@ -479,11 +191,9 @@ begin
   AddUnicodeVarCharColumn(ATable, 'DENIEDROLE', 30);
   Provider.CreateTable(ATable);
   AddPrimaryKey(Provider, 'MODROLE', 'MODROLEID');
-
   // AUTO INC TRIGGER
   CreateGenerator(Provider, 'GEN_MODROLE_ID');
   CreateAutoIncTrigger(Provider, 'BI_MODROLEID', 'MODROLE', 'MODROLEID', 'GEN_MODROLE_ID' );
-
   //USERROLES
   ATable := TDBXMetaDataTable.Create;
   ATable.TableName := 'USERROLE';
@@ -495,15 +205,12 @@ begin
   AddUnicodeVarCharColumn(ATable, 'ROLES', 30);
   Provider.CreateTable(ATable);
   AddPrimaryKey(Provider, 'USERROLE', 'USERROLEID');
-
   // AUTO INC TRIGGER
   CreateGenerator(Provider, 'GEN_USERROLE_ID');
   CreateAutoIncTrigger(Provider, 'BI_USERROLEID', 'USERROLE', 'USERROLEID', 'GEN_USERROLE_ID' );
-
   // Log
   ATable := TDBXMetaDataTable.Create;
   ATable.TableName := 'LOG';
-
   AddInt32Column         (ATable, 'LOGID');
   AddUnicodeVarCharColumn(ATable, 'IP_ADDRESS', 20);
   AddUnicodeVarCharColumn(ATable, 'EVENT', 50);
@@ -525,18 +232,6 @@ begin
     // Add blob ep2text field
     Comm.Text := SQLADDBLOBFIELD;
     Comm.ExecuteUpdate;
-
-    // Populate SITE
-    Comm.Text := Format(SQLINSERTSITE, ['SCSHQ','4/5 Henry St','Loganholme','Brisbane'
-                                       ,'4205', 'Auatralia', '0', QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
-    Comm.ExecuteQuery;
-
-    // Populate ROLLFORMER
-    Comm.Text := Format(SQLINSERTROLLFORMER, ['HQDEMO1', 'Demostration Michine 1'
-                                            , 'ScotRF Panel', '300', 'SCS001', '0'
-                                            ,'0' ,'1', '0'
-                                            , QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
-    Comm.ExecuteQuery;
 
     // Populate EMPLOYEE
     Comm.Text := Format(SqlInsertEMPLOYEE, ['1','1',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW)),'1'
