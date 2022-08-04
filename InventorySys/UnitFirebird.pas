@@ -2,11 +2,7 @@ unit UnitFirebird;
 
 interface
 
-uses SysUtils, UnitDataInterfaces, Data.SqlExpr, Data.DbxSqlite, FireDAC.Stan.Intf, FireDAC.Stan.Option,
-  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
-  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.VCLUI.Wait,
-  FireDAC.Comp.Client, FireDAC.Stan.ExprFuncs, FireDAC.Phys.SQLiteDef,
-  FireDAC.Phys.SQLite, UnitDBXMetadataHelper,
+uses Windows, SysUtils, UnitDataInterfaces, Data.SqlExpr, UnitDBXMetadataHelper,
   DbxCommon, DbxMetaDataProvider, DBXDataExpressMetaDataProvider,
   DbxInterbase, DbxClient, Dialogs, Data.DBXFirebird, Winapi.ShlObj;
 
@@ -15,6 +11,7 @@ type
   TInventoryFB = class(TInterfacedObject, IDataConnection)
   private
     FConn: TSQLConnection;
+    procedure CreateDatabase;
     procedure CreateSchema;
   public
     constructor Create;
@@ -45,24 +42,15 @@ begin
   FConn.LoginPrompt := false;
   if not FileExists(DB_NAME) then
   begin
-    try
-      CreateFBDatabase(DB_NAME);
-      FConn.Open;
-      CreateSchema;
-    except
-      On e:exception do
-        HandleException(e,'InitConnection', []);
-    end;
-  end
-  else
-  begin
-    try
-      FConn.Open;
-    except
-      On e:exception do
-        HandleException(e,'InitConnection', []);
-    end;
+    CreateDatabase;
+    CreateSchema;
   end;
+  FConn.Open;
+end;
+
+procedure TInventoryFB.CreateDatabase;
+begin
+  CreateFBDatabase(DB_NAME);
 end;
 
 procedure TInventoryFB.CreateSchema;

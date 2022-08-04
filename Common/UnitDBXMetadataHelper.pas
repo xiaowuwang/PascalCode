@@ -3,7 +3,12 @@ unit UnitDBXMetadataHelper;
 interface
 
 uses Forms, SysUtils, SqlExpr, DbxCommon, DbxMetaDataProvider,
-  DBXDataExpressMetaDataProvider, DbxInterbase, DbxClient, Windows;
+  DBXDataExpressMetaDataProvider, DbxInterbase, DbxClient, Windows,
+  Data.DbxSqlite, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.VCLUI.Wait,
+  FireDAC.Comp.Client, FireDAC.Stan.ExprFuncs, FireDAC.Phys.SQLiteDef,
+  FireDAC.Phys.SQLite;
 
 Type
 
@@ -158,6 +163,9 @@ procedure AddDateTimeColumn(ATable: TDBXMetaDataTable; ColumnName: string;
   aNullable : boolean = False);
 
 procedure CreateFBDatabase(const aDBName : AnsiString);
+procedure CreateSQLiteDatabase;
+
+
 
 implementation
 
@@ -629,5 +637,24 @@ begin
   end;
 
 end;
+
+procedure CreateSQLiteDatabase;
+var
+  FDrvLnk: TFDPhysSQLiteDriverLink;
+  FFDConn: TFDConnection;
+begin
+  FDrvLnk := TFDPhysSQLiteDriverLink.Create(nil);
+  FFDConn := TFDConnection.Create(nil);
+  try
+    FFDConn.DriverName:='Sqlite';
+    FFDConn.Params.Values['database']:='InventorySqlite.sqlite';
+    FFDConn.Connected := true;
+    FFDConn.Connected := false;
+  finally
+    FreeAndNil(FDrvLnk);
+    FreeAndNil(FFDConn);
+  end;
+end;
+
 
 end.

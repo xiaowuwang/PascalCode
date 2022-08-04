@@ -2,11 +2,7 @@ unit UnitSQLite;
 
 interface
 
-uses SysUtils, UnitDataInterfaces, Data.SqlExpr, Data.DbxSqlite, FireDAC.Stan.Intf, FireDAC.Stan.Option,
-  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
-  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.VCLUI.Wait,
-  FireDAC.Comp.Client, FireDAC.Stan.ExprFuncs, FireDAC.Phys.SQLiteDef,
-  FireDAC.Phys.SQLite, UnitDBXMetadataHelper,
+uses SysUtils, UnitDataInterfaces, Data.SqlExpr, UnitDBXMetadataHelper,
   DbxCommon, DbxMetaDataProvider, DBXDataExpressMetaDataProvider,
   DbxInterbase, DbxClient, Dialogs, Data.DBXFirebird, Winapi.ShlObj;
 
@@ -14,9 +10,8 @@ type
 
   TInventorySQLite = class(TInterfacedObject, IDataConnection)
   private
-    FDrvLnk: TFDPhysSQLiteDriverLink;
-    FFDConn: TFDConnection;
     FConn  : TSQLConnection;
+    procedure CreateDatabase;
     procedure CreateSchema;
   public
     constructor Create;
@@ -28,8 +23,6 @@ implementation
 constructor TInventorySQLite.Create;
 begin
   inherited create;
-  FDrvLnk := TFDPhysSQLiteDriverLink.Create(nil);
-  FFDConn := TFDConnection.Create(nil);
   FConn   := TSQLConnection.Create(nil);
 end;
 
@@ -37,19 +30,17 @@ function TInventorySQLite.ConnectToDB;
 begin
   if not FileExists('InventorySqlite.sqlite') then
   begin
-    FFDConn.DriverName:='Sqlite';
-    FFDConn.Params.Values['database']:='InventorySqlite.sqlite';
-    try
-      FFDConn.Connected := true;
-    except
-    end;
-    FFDConn.Connected := false;
+    CreateDatabase;
     FConn.DriverName:='Sqlite';
     FConn.Params.Values['database']:='InventorySqlite.sqlite';
     FConn.Connected := true;
     CreateSchema;
-//    PopulateData(FConn);
   end;
+end;
+
+procedure TInventorySQLite.CreateDatabase;
+begin
+  CreateSQLiteDatabase;
 end;
 
 procedure TInventorySQLite.CreateSchema;

@@ -11,6 +11,9 @@ type
   IDataConnection = Interface
   ['{9281BB97-F337-4765-98BE-62B3737FF7D8}']
     function ConnectToDB : Boolean;
+    procedure CreateDatabase;
+    procedure CreateSchema;
+
   End;
 
   ICustomerService = Interface
