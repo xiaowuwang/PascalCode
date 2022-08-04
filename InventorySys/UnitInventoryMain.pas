@@ -10,12 +10,17 @@ uses
   FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.VCLUI.Wait,
   FireDAC.Comp.Client, FireDAC.Stan.ExprFuncs, FireDAC.Phys.SQLiteDef,
-  FireDAC.Phys.SQLite;
+  FireDAC.Phys.SQLite, FireDAC.Phys.MSSQL, FireDAC.Phys.MSSQLDef,
+  FireDAC.Phys.ODBCBase, FireDAC.Comp.ScriptCommands, FireDAC.Stan.Util,
+  FireDAC.Comp.Script;
 
 type
   TFormInventoryMain = class(TForm)
     Panel1: TPanel;
     ButtonAddProduct: TButton;
+    FDConnection1: TFDConnection;
+    FDPhysMSSQLDriverLink1: TFDPhysMSSQLDriverLink;
+    FDScript1: TFDScript;
     procedure FormCreate(Sender: TObject);
     procedure ButtonAddProductClick(Sender: TObject);
   private
@@ -33,12 +38,13 @@ implementation
 
 {$R *.dfm}
 
-uses UnitFirebird, UnitProduct, UnitSQLite;
+uses UnitFirebird, UnitProduct, UnitSQLite, UnitMSSql;
 
 procedure TFormInventoryMain.FormCreate(Sender: TObject);
 begin
-  FConn := TInventoryFB.Create;
+//  FConn := TInventoryFB.Create;
 //  FConn := TInventorySQLite.Create;
+  FConn := TInventoryMSSql.Create;
   FConn.ConnectToDB;
   FInventory := TInventory.create(FConn);
 end;
