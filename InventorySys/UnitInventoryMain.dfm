@@ -32,28 +32,4 @@ object FormInventoryMain: TFormInventoryMain
       OnClick = ButtonAddProductClick
     end
   end
-  object FDConnection1: TFDConnection
-    Params.Strings = (
-      'DriverID=MSSQL'
-      'Server=STEVENLAPTOP'
-      ''
-      'User_Name=stevenwang'
-      'Password=W5Passw0rd')
-    Connected = True
-    LoginPrompt = False
-    Left = 192
-    Top = 176
-  end
-  object FDPhysMSSQLDriverLink1: TFDPhysMSSQLDriverLink
-    Left = 360
-    Top = 176
-  end
-  object FDScript1: TFDScript
-    SQLScripts = <>
-    Connection = FDConnection1
-    Params = <>
-    Macros = <>
-    Left = 512
-    Top = 296
-  end
 end

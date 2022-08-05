@@ -4,23 +4,13 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DBXFirebird,
-  Data.DB, Data.SqlExpr, UnitInventory, UnitDataInterfaces, Vcl.StdCtrls,
-  Vcl.ExtCtrls, Data.DbxSqlite, FireDAC.Stan.Intf, FireDAC.Stan.Option,
-  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
-  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.VCLUI.Wait,
-  FireDAC.Comp.Client, FireDAC.Stan.ExprFuncs, FireDAC.Phys.SQLiteDef,
-  FireDAC.Phys.SQLite, FireDAC.Phys.MSSQL, FireDAC.Phys.MSSQLDef,
-  FireDAC.Phys.ODBCBase, FireDAC.Comp.ScriptCommands, FireDAC.Stan.Util,
-  FireDAC.Comp.Script;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
+  UnitDataInterfaces, UnitInventory;
 
 type
   TFormInventoryMain = class(TForm)
     Panel1: TPanel;
     ButtonAddProduct: TButton;
-    FDConnection1: TFDConnection;
-    FDPhysMSSQLDriverLink1: TFDPhysMSSQLDriverLink;
-    FDScript1: TFDScript;
     procedure FormCreate(Sender: TObject);
     procedure ButtonAddProductClick(Sender: TObject);
   private
@@ -38,13 +28,16 @@ implementation
 
 {$R *.dfm}
 
-uses UnitFirebird, UnitProduct, UnitSQLite, UnitMSSql;
+uses UnitFirebird, UnitProduct, UnitSQLite, UnitFDMSSql, UnitFDFirebird,
+  UnitFDSQLite;
 
 procedure TFormInventoryMain.FormCreate(Sender: TObject);
 begin
 //  FConn := TInventoryFB.Create;
 //  FConn := TInventorySQLite.Create;
-  FConn := TInventoryMSSql.Create;
+//  FConn := TInventoryMSSql.Create;
+//  FConn := TFDInventoryFB.Create;
+  FConn := TFDInventorySQLite.Create;
   FConn.ConnectToDB;
   FInventory := TInventory.create(FConn);
 end;

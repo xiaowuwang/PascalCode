@@ -141,7 +141,7 @@ begin
     Table.FieldDefs.Add('PRODUCTID', ftInteger, 0, False);
     Table.FieldDefs.Add('NAME', ftString, 50, False);
     Table.FieldDefs.Add('DESCRIPTION', ftString, 50, False);
-    Table.FieldDefs.Add('PRICE', ftCurrency, 0, False);
+    Table.FieldDefs.Add('PRICE', ftFloat, 0, False);
     Table.FieldDefs.Add('TAXTYPE', ftSmallint, 0, False);
     Table.FieldDefs.Add('ADDEDON', ftDateTime, 0, False);
     { define primary key index }
@@ -184,7 +184,7 @@ begin
     Table.FieldDefs.Add('ORDERLINE', ftSmallInt, 0, False);
     Table.FieldDefs.Add('PRODUCTID', ftInteger, 0, False);
     Table.FieldDefs.Add('QUANTITY', ftInteger, 0, False);
-    Table.FieldDefs.Add('UNITPRICE', ftCurrency, 0, False);
+    Table.FieldDefs.Add('UNITPRICE', ftFloat, 0, False);
     Table.FieldDefs.Add('TAXTYPE', ftSmallint, 0, False);
     Table.FieldDefs.Add('ADDEDON', ftDateTime, 0, False);
     { define primary key index }

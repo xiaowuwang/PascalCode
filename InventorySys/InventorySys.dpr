@@ -14,9 +14,10 @@ uses
   UnitDSServerDB in '..\Common\UnitDSServerDB.pas',
   Com_Streams in '..\Common\Com_Streams.pas',
   Com_Sync in '..\Common\Com_Sync.pas',
-  UnitFirebird in 'UnitFirebird.pas',
-  UnitSQLite in 'UnitSQLite.pas',
-  UnitMSSql in 'UnitMSSql.pas';
+  UnitFDFirebird in 'UnitFDFirebird.pas',
+  UnitFDSQLite in 'UnitFDSQLite.pas',
+  UnitFDMSSql in 'UnitFDMSSql.pas',
+  UnitFirebird in 'UnitFirebird.pas';
 
 {$R *.res}
 
