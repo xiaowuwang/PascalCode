@@ -22,10 +22,11 @@ type
     procedure CreateDatabase;
     procedure CreateSchema;
     procedure ResetConnToInventoryDB;
+    function GetFDConn : TFDConnection;
   public
     constructor Create;
     function ConnectToDB : Boolean;
-    property FDConn : TFDConnection read FFDConn;
+    property FDConn : TFDConnection read GetFDConn;
   end;
 
 implementation
@@ -42,6 +43,11 @@ begin
   FFDConn.Params.Add('User_Name=stevenwang');
   FFDConn.Params.Add('Password=W5Passw0rd');
   FFDConn.Connected := True;
+end;
+
+function TFDInventoryMSSql.GetFDConn : TFDConnection;
+begin
+  result := FFDConn;
 end;
 
 function TFDInventoryMSSql.DatabaseNotExists:Boolean;

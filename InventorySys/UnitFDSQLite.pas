@@ -18,10 +18,11 @@ type
     procedure CreateDatabase;
     procedure CreateSchema;
     procedure ResetConnToInventoryDB;
-
+    function GetFDConn : TFDConnection;
   public
     constructor Create;
     function ConnectToDB : Boolean;
+    property FDConn : TFDConnection read GetFDConn;
   end;
 
 implementation
@@ -35,6 +36,12 @@ begin
   FDrvLnk := TFDPhysSQLiteDriverLink.Create(nil);
   FFDConn := TFDConnection.Create(nil);
 end;
+
+function TFDInventorySQLite.GetFDConn : TFDConnection;
+begin
+  result := FFDConn;
+end;
+
 
 function TFDInventorySQLite.DatabaseNotExists:Boolean;
 begin

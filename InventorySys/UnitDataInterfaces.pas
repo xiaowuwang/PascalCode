@@ -4,16 +4,17 @@ interface
 
 uses
   System.Generics.Collections, UnitCustomer, UnitOrder, UnitOrderItem,
-  UnitProduct;
+  UnitProduct, FireDAC.Comp.Client;
 
 type
 
   IDataConnection = Interface
   ['{9281BB97-F337-4765-98BE-62B3737FF7D8}']
-    function ConnectToDB : Boolean;
+    function GetFDConn : TFDConnection;
     procedure CreateDatabase;
     procedure CreateSchema;
-
+    function ConnectToDB : Boolean;
+    property FDConn : TFDConnection read GetFDConn;
   End;
 
   ICustomerService = Interface
