@@ -31,6 +31,7 @@ constructor TFDInventoryMSSql.Create;
 begin
   inherited create;
   FDPhysMSSQLDrvLnk:= TFDPhysMSSQLDriverLink.Create(nil);
+  FDB_NAME := 'INVENTORY';
   FFDConn.Params.Clear;
   FFDConn.Params.Add('DriverID=MSSQL');
   FFDConn.Params.Add('Server=STEVENLAPTOP');
@@ -43,7 +44,7 @@ function TFDInventoryMSSql.DatabaseNotExists:Boolean;
 begin
   FQuery := TFDQuery.Create(Nil);
   FQuery.Connection := FDConn;
-  FQuery.SQL.Text := 'SELECT name FROM master.dbo.sysdatabases WHERE name = N''INVENTORY'' ';
+  FQuery.SQL.Text := 'SELECT name FROM master.dbo.sysdatabases WHERE name ='+FDB_NAME;
   FQuery.Active := True;
   result := (FQuery.RecordCount = 0);
 end;
@@ -56,13 +57,13 @@ begin
   FFDConn.Params.Add('Server=STEVENLAPTOP');
   FFDConn.Params.Add('User_Name=stevenwang');
   FFDConn.Params.Add('Password=W5Passw0rd');
-  FFDConn.Params.Add('Database=INVENTORY');
+  FFDConn.Params.Add('Database='+FDB_NAME);
   FFDConn.Connected := True;
 end;
 
 procedure TFDInventoryMSSql.CreateDatabase;
 begin
-  FDConn.ExecSQL('CREATE DATABASE [INVENTORY]');
+  FDConn.ExecSQL('CREATE DATABASE '+FDB_NAME);
 end;
 
 end.

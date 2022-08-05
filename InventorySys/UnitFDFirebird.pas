@@ -27,18 +27,16 @@ implementation
 
 uses Com_Exception, Com_FBHelper;
 
-const
-  DB_NAME = 'INVENTORY.FDB';
-
 constructor TFDInventoryFB.Create;
 begin
   inherited create;
   FDPhysFBDrvLnk := TFDPhysFBDriverLink.Create(nil);
+  FDB_NAME := 'INVENTORY.FDB';
 end;
 
 function TFDInventoryFB.DatabaseNotExists:Boolean;
 begin
-  result := not FileExists(DB_NAME)
+  result := not FileExists(FDB_NAME)
 end;
 
 procedure  TFDInventoryFB.ResetConnToInventoryDB;
@@ -46,7 +44,7 @@ begin
   FFDConn.Connected :=False;
   FFDConn.Params.Clear;
   FFDConn.Params.Add('DriverID=FB');
-  FFDConn.Params.Add('Database='+DB_NAME);
+  FFDConn.Params.Add('Database='+FDB_NAME);
   FFDConn.Params.Add('User_Name=sysdba');
   FFDConn.Params.Add('Password=masterkey');
   FFDConn.Params.Add('CharacterSet=win1251');
@@ -55,7 +53,7 @@ end;
 
 procedure TFDInventoryFB.CreateDatabase;
 begin
-  CreateFBDatabase(DB_NAME);
+  CreateFBDatabase(FDB_NAME);
 end;
 
 end.

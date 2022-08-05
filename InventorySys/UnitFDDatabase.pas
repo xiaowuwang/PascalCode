@@ -16,6 +16,7 @@ type
   private
     function GetFDConn : TFDConnection;
   protected
+    FDB_NAME : String;
     FFDConn:  TFDConnection;
     function  DatabaseNotExists:Boolean;virtual;abstract;
     procedure CreateDatabase;virtual;abstract;
