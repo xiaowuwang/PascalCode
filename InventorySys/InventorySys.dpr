@@ -10,13 +10,12 @@ uses
   UnitDataInterfaces in 'UnitDataInterfaces.pas',
   UnitInventory in 'UnitInventory.pas',
   Com_Exception in '..\Common\Com_Exception.pas',
-  UnitDBXMetadataHelper in '..\Common\UnitDBXMetadataHelper.pas',
-  UnitDSServerDB in '..\Common\UnitDSServerDB.pas',
   Com_Streams in '..\Common\Com_Streams.pas',
   Com_Sync in '..\Common\Com_Sync.pas',
   UnitFDFirebird in 'UnitFDFirebird.pas',
   UnitFDSQLite in 'UnitFDSQLite.pas',
-  UnitFDMSSql in 'UnitFDMSSql.pas';
+  UnitFDMSSql in 'UnitFDMSSql.pas',
+  Com_FBHelper in '..\Common\Com_FBHelper.pas';
 
 {$R *.res}
 

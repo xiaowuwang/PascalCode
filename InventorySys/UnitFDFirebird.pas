@@ -29,7 +29,10 @@ type
 
 implementation
 
-uses UnitDSServerDB, Com_Exception, UnitDBXMetadataHelper;
+uses Com_Exception, Com_FBHelper;
+
+const
+  DB_NAME = 'INVENTORY.FDB';
 
 constructor TFDInventoryFB.Create;
 begin

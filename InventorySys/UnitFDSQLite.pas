@@ -26,6 +26,9 @@ type
 
 implementation
 
+const
+  DB_NAME = 'INVENTORY.sqlite';
+
 constructor TFDInventorySQLite.Create;
 begin
   inherited create;
@@ -35,7 +38,7 @@ end;
 
 function TFDInventorySQLite.DatabaseNotExists:Boolean;
 begin
-  result := not FileExists('InventorySqlite.sqlite')
+  result := not FileExists(DB_NAME)
 end;
 
 procedure TFDInventorySQLite.ResetConnToInventoryDB;
@@ -43,7 +46,7 @@ begin
   FFDConn.Connected :=False;
   FFDConn.Params.Clear;
   FFDConn.DriverName:='Sqlite';
-  FFDConn.Params.Values['database']:='InventorySqlite.sqlite';
+  FFDConn.Params.Values['database']:=DB_NAME;
   FFDConn.Connected := True;
 end;
 
@@ -60,7 +63,7 @@ procedure TFDInventorySQLite.CreateDatabase;
 begin
   try
     FFDConn.DriverName:='Sqlite';
-    FFDConn.Params.Values['database']:='InventorySqlite.sqlite';
+    FFDConn.Params.Values['database']:=DB_NAME;
     FFDConn.Connected := true;
     FFDConn.Connected := false;
   finally
