@@ -3,9 +3,7 @@ unit UnitDSServerDB;
 interface
 
 uses
-  Forms, SysUtils, SqlExpr, UnitDBXMetadataHelper,
-  DbxCommon, DbxMetaDataProvider, DBXDataExpressMetaDataProvider,
-  DbxInterbase, DbxClient, Dialogs, Data.DBXFirebird, Winapi.ShlObj;
+  Forms, SysUtils, SqlExpr;
 
 const
   DB_NAME = 'INVENTORY.FDB';
@@ -128,6 +126,11 @@ begin
     Comm.Text := Format(SqlInsertUSERROLE, [QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW)),'1'
                                           ,'1','Grant','ADMIN']);
     Comm.ExecuteQuery;
+
+
+
+
+
   finally
     Comm.Free;
   end;

@@ -44,7 +44,7 @@ function TFDInventoryMSSql.DatabaseNotExists:Boolean;
 begin
   FQuery := TFDQuery.Create(Nil);
   FQuery.Connection := FDConn;
-  FQuery.SQL.Text := 'SELECT name FROM master.dbo.sysdatabases WHERE name ='+FDB_NAME;
+  FQuery.SQL.Text := 'SELECT name FROM master.dbo.sysdatabases WHERE name = N''INVENTORY'' ';
   FQuery.Active := True;
   result := (FQuery.RecordCount = 0);
 end;
