@@ -31,7 +31,7 @@ constructor TFDInventoryMSSql.Create;
 begin
   inherited create;
   FDPhysMSSQLDrvLnk:= TFDPhysMSSQLDriverLink.Create(nil);
-  FFDConn := TFDConnection.Create(nil);
+  FFDConn.Params.Clear;
   FFDConn.Params.Add('DriverID=MSSQL');
   FFDConn.Params.Add('Server=STEVENLAPTOP');
   FFDConn.Params.Add('User_Name=stevenwang');
