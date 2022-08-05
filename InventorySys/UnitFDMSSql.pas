@@ -16,11 +16,11 @@ type
   private
     FDPhysMSSQLDrvLnk: TFDPhysMSSQLDriverLink;
     FQuery   : TFDQuery;
+  public
+    constructor Create;override;
     function DatabaseNotExists:Boolean;override;
     procedure CreateDatabase;override;
-    procedure ResetConnToInventoryDB;override;
-  public
-    constructor Create;
+    function ResetConnToInventoryDB : boolean;override;
   end;
 
 implementation
@@ -49,7 +49,7 @@ begin
   result := (FQuery.RecordCount = 0);
 end;
 
-procedure TFDInventoryMSSql.ResetConnToInventoryDB;
+function TFDInventoryMSSql.ResetConnToInventoryDB : boolean;
 begin
   FFDConn.Connected :=False;
   FFDConn.Params.Clear;
@@ -59,6 +59,7 @@ begin
   FFDConn.Params.Add('Password=W5Passw0rd');
   FFDConn.Params.Add('Database='+FDB_NAME);
   FFDConn.Connected := True;
+  result := FFDConn.Connected;
 end;
 
 procedure TFDInventoryMSSql.CreateDatabase;

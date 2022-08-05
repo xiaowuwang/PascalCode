@@ -93,7 +93,7 @@ begin
   if Result[Length(Result)] <> '\' then
     Result := Result + '\';
   Result := Result + ChangeFileExt(ExtractFileName(Application.ExeName), '')+ '\';
-  if not DirectoryExists(Result) then
+  if not SysUtils.DirectoryExists(Result) then
     CreateDir(Result);
 end;
 
@@ -119,7 +119,7 @@ begin
   if AFileName = '' then
     AFileName := 'Except.Log';
   FFileName := GetDatabaseDirectory + 'Log\';
-  if not DirectoryExists(FFileName) then
+  if not SysUtils.DirectoryExists(FFileName) then
     CreateDir(FFileName);
   FFileName := FFileName + AFileName;
 
@@ -128,7 +128,7 @@ begin
 
   AFileName := FFileName;
   for i := 1 to Length(AFileName) do
-    if AFileName[i] in [':','\','/'] then
+    if CharInSet(AFileName[i],[':','\','/']) then
       AFileName[i] := '.';
   FLock := TRealMutexSync.Create(AFileName,True);
   FModuleName := Uppercase(ChangeFileExt(ExtractFileName(ParamStr(0)),''));

@@ -33,8 +33,8 @@ type
     procedure Append; overload;
     function  ReadCh : Char;
     function  ReadLn : AnsiString;
-    procedure WriteLn(S : AnsiString);
-    procedure Write(const S : AnsiString); reintroduce;
+    procedure WriteLn(S : String);
+    procedure Write(const S : String); reintroduce;
     property  Eof: boolean read FEof;
   end;
 
@@ -151,7 +151,7 @@ begin
   while P <> nil do
   begin
     Start := P;
-    while not (P^ in [#0, #10, #13]) do Inc(P);
+    while not CharInSet(P^,[#0, #10, #13]) do Inc(P);
     SetString(S, Start, P - Start);
     Result := Result + S;
     if P^ = #0 then
@@ -185,13 +185,13 @@ begin
     IncBufPtr;
 end;
 
-procedure TTextStream.WriteLn(S : AnsiString);
+procedure TTextStream.WriteLn(S : String);
 begin
   S := S + sLineBreak;
   WriteBuffer(S[1],Length(S));
 end;
 
-procedure TTextStream.Write(const S : AnsiString);
+procedure TTextStream.Write(const S : String);
 begin
   WriteBuffer(S[1],Length(S));
 end;

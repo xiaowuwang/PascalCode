@@ -13,11 +13,11 @@ type
   TFDInventorySQLite = class(TFDDatabase)
   private
     FDrvLnk: TFDPhysSQLiteDriverLink;
+  public
+    constructor Create;override;
     function DatabaseNotExists:Boolean;override;
     procedure CreateDatabase;override;
-    procedure ResetConnToInventoryDB;override;
-  public
-    constructor Create;
+    function ResetConnToInventoryDB : boolean;override;
   end;
 
 implementation
@@ -35,13 +35,14 @@ begin
   result := not FileExists(FDB_NAME)
 end;
 
-procedure TFDInventorySQLite.ResetConnToInventoryDB;
+function TFDInventorySQLite.ResetConnToInventoryDB : boolean;
 begin
   FFDConn.Connected :=False;
   FFDConn.Params.Clear;
   FFDConn.DriverName:='Sqlite';
   FFDConn.Params.Values['database']:=FDB_NAME;
   FFDConn.Connected := True;
+  Result := FFDConn.Connected;
 end;
 
 procedure TFDInventorySQLite.CreateDatabase;

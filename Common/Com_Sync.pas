@@ -492,7 +492,7 @@ begin
   if InstanceName <> '' then
     begin
     for i := 1 to Length(InstanceName) do
-      if InstanceName[i] in [':','\'] then
+      if CharInSet(InstanceName[i], [':','\']) then
         InstanceName[i] := '.';
       S := S + '$' + Lowercase(InstanceName);
     end;

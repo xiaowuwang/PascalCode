@@ -33,8 +33,8 @@ uses UnitFDMSSql, UnitFDFirebird, UnitFDSQLite, UnitProduct;
 procedure TFormInventoryMain.FormCreate(Sender: TObject);
 begin
 //  FConn := TFDInventoryMSSql.Create;
-//  FConn := TFDInventoryFB.Create;
-  FConn := TFDInventorySQLite.Create;
+  FConn := TFDInventoryFB.Create;
+//  FConn := TFDInventorySQLite.Create;
   FConn.ConnectToDB;
   FInventory := TInventory.create(FConn);
 end;

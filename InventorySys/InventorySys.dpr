@@ -15,7 +15,6 @@ uses
   UnitFDFirebird in 'UnitFDFirebird.pas',
   UnitFDSQLite in 'UnitFDSQLite.pas',
   UnitFDDatabase in 'UnitFDDatabase.pas',
-  Com_FBHelper in '..\Common\Com_FBHelper.pas',
   UnitFDMSSql in 'UnitFDMSSql.pas';
 
 {$R *.res}

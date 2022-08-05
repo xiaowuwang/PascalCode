@@ -20,7 +20,7 @@ type
     FFDConn:  TFDConnection;
     function  DatabaseNotExists:Boolean;virtual;abstract;
     procedure CreateDatabase;virtual;abstract;
-    procedure ResetConnToInventoryDB;virtual;abstract;
+    function ResetConnToInventoryDB : Boolean;virtual;abstract;
     procedure CreateSchema;
   public
     constructor Create; virtual;
@@ -43,14 +43,14 @@ begin
   result := FFDConn;
 end;
 
-function TFDDatabase.ConnectToDB;
+function TFDDatabase.ConnectToDB: boolean;
 begin
   if DatabaseNotExists then
   begin
     CreateDatabase;
     CreateSchema;
   end;
-  ResetConnToInventoryDB;
+  result := ResetConnToInventoryDB;
 end;
 
 procedure TFDDatabase.CreateSchema;
