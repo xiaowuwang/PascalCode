@@ -6,7 +6,7 @@ type
 
   TOrderItem = Class(TObject)
   Private
-    FID             : Integer;
+    FOrderItemID    : Integer;
     FOrderID        : Integer;
     FOrderLine      : Integer;
     FProductID      : String;
@@ -14,7 +14,7 @@ type
     FUnitPrice      : Currency;
     FTaxType        : Integer;
   Public
-    property ID             : Integer   read FID write FID;
+    property OrderItemID    : Integer   read FOrderItemID write FOrderItemID;
     property OrderID        : Integer   read FOrderID   write FOrderID;
     property OrderLine      : Integer   read FOrderLine write FOrderLine;
     property ProductID      : String    read FProductID write FProductID;
