@@ -66,15 +66,15 @@ begin
     { specify table name }
     Table.TableName := 'CUSTOMER';
     { add some fields }
-    Table.FieldDefs.Add('CUSTOMERID', ftInteger, 0, False);
-    Table.FieldDefs.Add('FIRSTNAME', ftString, 50, False);
-    Table.FieldDefs.Add('LASTNAME', ftString, 50, False);
-    Table.FieldDefs.Add('GENDER', ftString, 50, False);
-    Table.FieldDefs.Add('EMAILADDRESS', ftString, 50, False);
-    Table.FieldDefs.Add('ADDRESS1', ftString, 50, False);
-    Table.FieldDefs.Add('ADDRESS2', ftString, 50, False);
-    Table.FieldDefs.Add('CITY', ftString, 50, False);
-    Table.FieldDefs.Add('ADDEDON', ftDateTime, 0, False);
+    Table.FieldDefs.Add('CUSTOMERID', ftInteger, 0, True);
+    Table.FieldDefs.Add('FIRSTNAME', ftString, 50);
+    Table.FieldDefs.Add('LASTNAME', ftString, 50);
+    Table.FieldDefs.Add('GENDER', ftString, 50);
+    Table.FieldDefs.Add('EMAILADDRESS', ftString, 50);
+    Table.FieldDefs.Add('ADDRESS1', ftString, 50);
+    Table.FieldDefs.Add('ADDRESS2', ftString, 50);
+    Table.FieldDefs.Add('CITY', ftString, 50);
+    Table.FieldDefs.Add('ADDEDON', ftDateTime);
     { define primary key index }
     Table.AddIndex('pkCUSTOMERID', 'CUSTOMERID', '', [soPrimary]);
     { and create it; when the first parameter is True, an existing one is dropped }
@@ -87,22 +87,65 @@ begin
   try
     Table.Connection := FDConn;
     { specify table name }
+    { specify table name }
+    Table.TableName := 'SUPPLIER';
+    { add some fields }
+    Table.FieldDefs.Add('SUPPLIERID', ftInteger, 0, True);
+    Table.FieldDefs.Add('FIRSTNAME', ftString, 50);
+    Table.FieldDefs.Add('LASTNAME', ftString, 50);
+    Table.FieldDefs.Add('GENDER', ftString, 50);
+    Table.FieldDefs.Add('EMAILADDRESS', ftString, 50);
+    Table.FieldDefs.Add('ADDRESS1', ftString, 50);
+    Table.FieldDefs.Add('ADDRESS2', ftString, 50);
+    Table.FieldDefs.Add('CITY', ftString, 50);
+    Table.FieldDefs.Add('ADDEDON', ftDateTime);
+    { define primary key index }
+    Table.AddIndex('pkSUPPLIERID', 'SUPPLIERID', '', [soPrimary]);
+    { and create it; when the first parameter is True, an existing one is dropped }
+    Table.CreateTable(False);
+  finally
+    FreeAndNil(Table);
+  end;
+
+  Table := TFDTable.Create(nil);
+  try
+    Table.Connection := FDConn;
+    { specify table name }
+    Table.TableName := 'STOCKITEM';
+    { add some fields }
+    Table.FieldDefs.Add('STOCKITEMID', ftInteger, 0, True);
+    Table.FieldDefs.Add('PRODUCTCODE', ftString, 25, True);
+    Table.FieldDefs.Add('QUANTITYONHAND', ftInteger);
+    Table.FieldDefs.Add('LASTSTOCKQUQNTITY', ftInteger);
+    Table.FieldDefs.Add('ADDEDON', ftDateTime);
+    { define primary key index }
+    Table.AddIndex('pkSTOCKITEMID', 'STOCKITEMID', '', [soPrimary]);
+    { and create it; when the first parameter is True, an existing one is dropped }
+    Table.CreateTable(False);
+  finally
+    FreeAndNil(Table);
+  end;
+
+  Table := TFDTable.Create(nil);
+  try
+    Table.Connection := FDConn;
+    { specify table name }
     Table.TableName := 'PRODUCT';
     { add some fields }
-    Table.FieldDefs.Add('PRODUCTID', ftInteger, 0, False);
-    Table.FieldDefs.Add('PRODUCTCODE', ftString, 25, False);
-    Table.FieldDefs.Add('PRODUCTNAME', ftString, 50, False);
-    Table.FieldDefs.Add('STANDARDCOST', ftFloat, 0, False);
-    Table.FieldDefs.Add('SAFETYSTOCKLEVEL', ftSmallint, 0, False);
-    Table.FieldDefs.Add('REORDERPOINT', ftSmallint, 0, False);
-    Table.FieldDefs.Add('LISTPRICE', ftFloat, 0, False);
-    Table.FieldDefs.Add('PRODUCTLINE', ftString, 2, False);
-    Table.FieldDefs.Add('DEALERPRICE', ftFloat, 0, False);
-    Table.FieldDefs.Add('MODELNAME', ftString, 50, False);
-    Table.FieldDefs.Add('DESCRIPTION', ftString, 400, False);
-    Table.FieldDefs.Add('STATUS', ftSmallint, 0, False);
-    Table.FieldDefs.Add('TAXTYPE', ftSmallint, 0, False);
-    Table.FieldDefs.Add('ADDEDON', ftDateTime, 0, False);
+    Table.FieldDefs.Add('PRODUCTID', ftInteger, 0, True);
+    Table.FieldDefs.Add('PRODUCTCODE', ftString, 25, True);
+    Table.FieldDefs.Add('PRODUCTNAME', ftString, 50, True);
+    Table.FieldDefs.Add('STANDARDCOST', ftFloat);
+    Table.FieldDefs.Add('SAFETYSTOCKLEVEL', ftSmallint);
+    Table.FieldDefs.Add('REORDERPOINT', ftSmallint);
+    Table.FieldDefs.Add('LISTPRICE', ftFloat);
+    Table.FieldDefs.Add('PRODUCTLINE', ftString, 2);
+    Table.FieldDefs.Add('DEALERPRICE', ftFloat);
+    Table.FieldDefs.Add('MODELNAME', ftString, 50);
+    Table.FieldDefs.Add('DESCRIPTION', ftString, 400);
+    Table.FieldDefs.Add('STATUS', ftSmallint);
+    Table.FieldDefs.Add('TAXTYPE', ftSmallint);
+    Table.FieldDefs.Add('ADDEDON', ftDateTime);
     { define primary key index }
     Table.AddIndex('pkPRODUCTID', 'PRODUCTID', '', [soPrimary]);
     { and create it; when the first parameter is True, an existing one is dropped }
@@ -117,13 +160,13 @@ begin
     { specify table name }
     Table.TableName := 'ORDER';
     { add some fields }
-    Table.FieldDefs.Add('ORDERID', ftInteger, 0, False);
-    Table.FieldDefs.Add('CUSTOMERID', ftInteger, 0, False);
-    Table.FieldDefs.Add('ORDERDATE', ftDatetime, 0, False);
-    Table.FieldDefs.Add('STATUS', ftSmallInt, 0, False);
-    Table.FieldDefs.Add('PAYMENTTYPE', ftSmallint, 0, False);
-    Table.FieldDefs.Add('TRACKINGNUMBER', ftString, 50, False);
-    Table.FieldDefs.Add('ADDEDON', ftDateTime, 0, False);
+    Table.FieldDefs.Add('ORDERID', ftInteger, 0, True);
+    Table.FieldDefs.Add('CUSTOMERID', ftInteger, 0, True);
+    Table.FieldDefs.Add('ORDERDATE', ftDatetime, 0, True);
+    Table.FieldDefs.Add('STATUS', ftSmallInt, 0, True);
+    Table.FieldDefs.Add('PAYMENTTYPE', ftSmallint, 0, True);
+    Table.FieldDefs.Add('TRACKINGNUMBER', ftString, 50);
+    Table.FieldDefs.Add('ADDEDON', ftDateTime);
     { define primary key index }
     Table.AddIndex('pkORDERID', 'ORDERID', '', [soPrimary]);
     { and create it; when the first parameter is True, an existing one is dropped }
@@ -138,14 +181,14 @@ begin
     { specify table name }
     Table.TableName := 'ORDERITEM';
     { add some fields }
-    Table.FieldDefs.Add('ORDERITEMID', ftInteger, 0, False);
-    Table.FieldDefs.Add('ORDERID', ftInteger, 0, False);
-    Table.FieldDefs.Add('ORDERLINE', ftSmallInt, 0, False);
-    Table.FieldDefs.Add('PRODUCTID', ftInteger, 0, False);
-    Table.FieldDefs.Add('QUANTITY', ftInteger, 0, False);
-    Table.FieldDefs.Add('UNITPRICE', ftFloat, 0, False);
-    Table.FieldDefs.Add('TAXTYPE', ftSmallint, 0, False);
-    Table.FieldDefs.Add('ADDEDON', ftDateTime, 0, False);
+    Table.FieldDefs.Add('ORDERITEMID', ftInteger);
+    Table.FieldDefs.Add('ORDERID', ftInteger, 0, True);
+    Table.FieldDefs.Add('ORDERLINE', ftSmallInt);
+    Table.FieldDefs.Add('PRODUCTID', ftInteger, 0, True);
+    Table.FieldDefs.Add('QUANTITY', ftInteger, 0, True);
+    Table.FieldDefs.Add('UNITPRICE', ftFloat, 0, True);
+    Table.FieldDefs.Add('TAXTYPE', ftSmallint, 0, True);
+    Table.FieldDefs.Add('ADDEDON', ftDateTime);
     { define primary key index }
     Table.AddIndex('pkORDERID', 'ORDERID', '', [soPrimary]);
     { and create it; when the first parameter is True, an existing one is dropped }

@@ -1,4 +1,4 @@
-unit UnitCustomer;
+unit UnitSupplier;
 
 interface
 
@@ -6,7 +6,7 @@ uses Classes, UnitPeople;
 
 type
 
-  TCustomer = Class(TPeople)
+  TSupplier = Class(TPeople)
   Private
     FID  : Integer;
     FFirstName   : String;

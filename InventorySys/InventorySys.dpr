@@ -4,7 +4,7 @@ uses
   Vcl.Forms,
   UnitInventoryMain in 'UnitInventoryMain.pas' {FormInventoryMain},
   UnitProduct in 'UnitProduct.pas',
-  UnitCustomer in 'UnitCustomer.pas',
+  UnitPeople in 'UnitPeople.pas',
   UnitOrder in 'UnitOrder.pas',
   UnitOrderItem in 'UnitOrderItem.pas',
   UnitDataInterfaces in 'UnitDataInterfaces.pas',
@@ -15,7 +15,10 @@ uses
   UnitFDFirebird in 'UnitFDFirebird.pas',
   UnitFDSQLite in 'UnitFDSQLite.pas',
   UnitFDDatabase in 'UnitFDDatabase.pas',
-  UnitFDMSSql in 'UnitFDMSSql.pas';
+  UnitFDMSSql in 'UnitFDMSSql.pas',
+  UnitSupplier in 'UnitSupplier.pas',
+  UnitCustomer in 'UnitCustomer.pas',
+  UnitBaseObject in 'UnitBaseObject.pas';
 
 {$R *.res}
 

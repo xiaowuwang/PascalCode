@@ -98,7 +98,7 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UnitProduct.pas"/>
-        <DCCReference Include="UnitCustomer.pas"/>
+        <DCCReference Include="UnitPeople.pas"/>
         <DCCReference Include="UnitOrder.pas"/>
         <DCCReference Include="UnitOrderItem.pas"/>
         <DCCReference Include="UnitDataInterfaces.pas"/>
@@ -110,6 +110,9 @@
         <DCCReference Include="UnitFDSQLite.pas"/>
         <DCCReference Include="UnitFDDatabase.pas"/>
         <DCCReference Include="UnitFDMSSql.pas"/>
+        <DCCReference Include="UnitSupplier.pas"/>
+        <DCCReference Include="UnitCustomer.pas"/>
+        <DCCReference Include="UnitBaseObject.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

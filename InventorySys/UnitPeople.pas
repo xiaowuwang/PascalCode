@@ -1,12 +1,12 @@
-unit UnitCustomer;
+unit UnitPeople;
 
 interface
 
-uses Classes, UnitPeople;
+uses Classes, UnitBaseObject;
 
 type
 
-  TCustomer = Class(TPeople)
+  TPeople = Class(TBaseObject)
   Private
     FID  : Integer;
     FFirstName   : String;
@@ -27,7 +27,6 @@ type
     property Address2    : String   read FAddress2     write FAddress2;
     property City        : String   read FCity         write FCity;
     property Orders      : TList    read FOrders       write FOrders;
-
   End;
 
 implementation

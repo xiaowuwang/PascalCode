@@ -2,16 +2,12 @@ unit UnitInventory;
 
 interface
 
-uses UnitDataInterfaces
-   , System.Generics.Collections
-   , UnitCustomer
-   , UnitOrder
-   , UnitOrderItem
-   , UnitProduct;
+uses System.Generics.Collections
+   , UnitBaseObject, UnitDataInterfaces, UnitProduct;
 
 Type
 
-  TInventory = class(TObject)
+  TInventory = class(TBaseObject)
   private
     FConn : IDataConnection;
     FProducts : TList<TProduct>;
