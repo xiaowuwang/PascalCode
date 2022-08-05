@@ -2,7 +2,7 @@ unit UnitInventory;
 
 interface
 
-uses UnitBaseObject;
+uses Com_BaseObject;
 
 Type
 

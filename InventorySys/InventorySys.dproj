@@ -93,26 +93,26 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="UnitInventoryMain.pas">
+        <DCCReference Include="Common\Com_Exception.pas"/>
+        <DCCReference Include="Common\Com_Streams.pas"/>
+        <DCCReference Include="Common\Com_Sync.pas"/>
+        <DCCReference Include="Common\Com_BaseObject.pas"/>
+        <DCCReference Include="BussinessLogic\UnitCustomer.pas"/>
+        <DCCReference Include="BussinessLogic\UnitInventory.pas"/>
+        <DCCReference Include="BussinessLogic\UnitOrder.pas"/>
+        <DCCReference Include="BussinessLogic\UnitOrderItem.pas"/>
+        <DCCReference Include="BussinessLogic\UnitPeople.pas"/>
+        <DCCReference Include="BussinessLogic\UnitProduct.pas"/>
+        <DCCReference Include="BussinessLogic\UnitSupplier.pas"/>
+        <DCCReference Include="DataAccess\UnitDataInterfaces.pas"/>
+        <DCCReference Include="DataAccess\UnitFDDatabase.pas"/>
+        <DCCReference Include="DataAccess\UnitFDFirebird.pas"/>
+        <DCCReference Include="DataAccess\UnitFDMSSql.pas"/>
+        <DCCReference Include="DataAccess\UnitFDSQLite.pas"/>
+        <DCCReference Include="Presentation\UnitInventoryMain.pas">
             <Form>FormInventoryMain</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UnitProduct.pas"/>
-        <DCCReference Include="UnitPeople.pas"/>
-        <DCCReference Include="UnitOrder.pas"/>
-        <DCCReference Include="UnitOrderItem.pas"/>
-        <DCCReference Include="UnitDataInterfaces.pas"/>
-        <DCCReference Include="UnitInventory.pas"/>
-        <DCCReference Include="..\Common\Com_Exception.pas"/>
-        <DCCReference Include="..\Common\Com_Streams.pas"/>
-        <DCCReference Include="..\Common\Com_Sync.pas"/>
-        <DCCReference Include="UnitFDFirebird.pas"/>
-        <DCCReference Include="UnitFDSQLite.pas"/>
-        <DCCReference Include="UnitFDDatabase.pas"/>
-        <DCCReference Include="UnitFDMSSql.pas"/>
-        <DCCReference Include="UnitSupplier.pas"/>
-        <DCCReference Include="UnitCustomer.pas"/>
-        <DCCReference Include="UnitBaseObject.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

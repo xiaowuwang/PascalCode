@@ -1,4 +1,4 @@
-unit UnitBaseObject;
+unit Com_BaseObject;
 
 interface
 

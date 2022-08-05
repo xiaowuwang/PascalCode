@@ -2,7 +2,7 @@ unit UnitProduct;
 
 interface
 
-uses UnitBaseObject;
+uses Com_BaseObject;
 
 type
 

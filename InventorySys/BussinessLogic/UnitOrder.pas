@@ -2,7 +2,7 @@ unit UnitOrder;
 
 interface
 
-uses UnitBaseObject;
+uses Com_BaseObject;
 
 type
 

@@ -2,7 +2,7 @@ unit UnitPeople;
 
 interface
 
-uses Classes, UnitBaseObject;
+uses Classes, Com_BaseObject;
 
 type
 
