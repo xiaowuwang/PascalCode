@@ -28,14 +28,11 @@ implementation
 
 {$R *.dfm}
 
-uses UnitFirebird, UnitProduct, UnitSQLite, UnitFDMSSql, UnitFDFirebird,
-  UnitFDSQLite;
+uses UnitFDMSSql, UnitFDFirebird, UnitFDSQLite, UnitProduct;
 
 procedure TFormInventoryMain.FormCreate(Sender: TObject);
 begin
-//  FConn := TInventoryFB.Create;
-//  FConn := TInventorySQLite.Create;
-//  FConn := TInventoryMSSql.Create;
+//  FConn := TFDInventoryMSSql.Create;
 //  FConn := TFDInventoryFB.Create;
   FConn := TFDInventorySQLite.Create;
   FConn.ConnectToDB;

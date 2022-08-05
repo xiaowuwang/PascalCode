@@ -111,7 +111,6 @@
         <DCCReference Include="UnitFDFirebird.pas"/>
         <DCCReference Include="UnitFDSQLite.pas"/>
         <DCCReference Include="UnitFDMSSql.pas"/>
-        <DCCReference Include="UnitFirebird.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

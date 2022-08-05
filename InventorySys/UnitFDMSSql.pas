@@ -12,7 +12,7 @@ uses SysUtils, UnitDataInterfaces, Data.DbxSqlite, FireDAC.Stan.Intf, FireDAC.St
 
 type
 
-  TInventoryMSSql = class(TInterfacedObject, IDataConnection)
+  TFDInventoryMSSql = class(TInterfacedObject, IDataConnection)
   private
     FFDConn: TFDConnection;
     FDPhysMSSQLDrvLnk: TFDPhysMSSQLDriverLink;
@@ -32,7 +32,7 @@ implementation
 
 uses Com_Exception;
 
-constructor TInventoryMSSql.Create;
+constructor TFDInventoryMSSql.Create;
 begin
   inherited create;
   FDPhysMSSQLDrvLnk:= TFDPhysMSSQLDriverLink.Create(nil);
@@ -44,7 +44,7 @@ begin
   FFDConn.Connected := True;
 end;
 
-function TInventoryMSSql.DatabaseNotExists:Boolean;
+function TFDInventoryMSSql.DatabaseNotExists:Boolean;
 begin
   FQuery := TFDQuery.Create(Nil);
   FQuery.Connection := FDConn;
@@ -53,7 +53,7 @@ begin
   result := (FQuery.RecordCount = 0);
 end;
 
-procedure TInventoryMSSql.ResetConnToInventoryDB;
+procedure TFDInventoryMSSql.ResetConnToInventoryDB;
 begin
   FFDConn.Connected :=False;
   FFDConn.Params.Clear;
@@ -65,7 +65,7 @@ begin
   FFDConn.Connected := True;
 end;
 
-function TInventoryMSSql.ConnectToDB;
+function TFDInventoryMSSql.ConnectToDB;
 begin
   if DatabaseNotExists then
   begin
@@ -75,7 +75,7 @@ begin
   ResetConnToInventoryDB;
 end;
 
-procedure TInventoryMSSql.CreateDatabase;
+procedure TFDInventoryMSSql.CreateDatabase;
 begin
   FDScript := TFDScript.Create(nil);
   FDScript.Connection := FFDConn;
@@ -104,7 +104,7 @@ begin
   end;
 end;
 
-procedure TInventoryMSSql.CreateSchema;
+procedure TFDInventoryMSSql.CreateSchema;
 var
   Table: TFDTable;
 begin
