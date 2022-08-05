@@ -2,9 +2,11 @@ unit UnitProduct;
 
 interface
 
+uses UnitBaseObject;
+
 type
 
-  TProduct = Class(TObject)
+  TProduct = Class(TBaseObject)
   Private
     FProductID   : String;
     FName        : String;

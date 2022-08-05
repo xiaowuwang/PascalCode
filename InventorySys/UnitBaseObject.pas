@@ -2,7 +2,6 @@ unit UnitBaseObject;
 
 interface
 
-
 Type
 
   TBaseObject = class(TObject)

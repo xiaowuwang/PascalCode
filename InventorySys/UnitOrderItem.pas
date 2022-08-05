@@ -2,9 +2,11 @@ unit UnitOrderItem;
 
 interface
 
+uses UnitBaseObject;
+
 type
 
-  TOrderItem = Class(TObject)
+  TOrderItem = Class(TBaseObject)
   Private
     FOrderItemID    : Integer;
     FOrderID        : Integer;

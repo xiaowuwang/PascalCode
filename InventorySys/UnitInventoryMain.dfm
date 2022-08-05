@@ -29,7 +29,6 @@ object FormInventoryMain: TFormInventoryMain
       Height = 25
       Caption = 'Add Product'
       TabOrder = 0
-      OnClick = ButtonAddProductClick
     end
   end
 end
