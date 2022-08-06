@@ -20,6 +20,7 @@ type
     constructor Create;override;
     function DatabaseNotExists:Boolean;override;
     procedure CreateDatabase;override;
+    procedure CreateSchema;override;
     function ResetConnToInventoryDB : boolean;override;
   end;
 
@@ -65,6 +66,29 @@ end;
 procedure TFDInventoryMSSql.CreateDatabase;
 begin
   FDConn.ExecSQL('CREATE DATABASE '+FDB_NAME);
+end;
+
+procedure TFDInventoryMSSql.CreateSchema;
+begin
+  inherited;
+  FDConn.ExecSQL('ALTER TABLE CUSTOMER'+
+                 ' ADD ID INT IDENTITY'+
+                 ' CONSTRAINT PK_CUSTOMER PRIMARY KEY CLUSTERED' );
+  FDConn.ExecSQL('ALTER TABLE SUPPLIER'+
+                 ' ADD ID INT IDENTITY'+
+                 ' CONSTRAINT PK_SUPPLIER PRIMARY KEY CLUSTERED' );
+  FDConn.ExecSQL('ALTER TABLE STOCKITEM'+
+                 ' ADD ID INT IDENTITY'+
+                 ' CONSTRAINT PK_STOCKITEM PRIMARY KEY CLUSTERED' );
+  FDConn.ExecSQL('ALTER TABLE PRODUCT'+
+                 ' ADD ID INT IDENTITY'+
+                 ' CONSTRAINT PK_PRODUCT PRIMARY KEY CLUSTERED' );
+  FDConn.ExecSQL('ALTER TABLE ORDERS'+
+                 ' ADD ID INT IDENTITY'+
+                 ' CONSTRAINT PK_ORDERS PRIMARY KEY CLUSTERED' );
+  FDConn.ExecSQL('ALTER TABLE ORDERITEM'+
+                 ' ADD ID INT IDENTITY'+
+                 ' CONSTRAINT PK_ORDERITEM PRIMARY KEY CLUSTERED' );
 end;
 
 end.

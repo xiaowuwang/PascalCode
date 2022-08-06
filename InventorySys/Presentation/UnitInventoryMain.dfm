@@ -12,6 +12,7 @@ object FormInventoryMain: TFormInventoryMain
   Font.Style = []
   OldCreateOrder = True
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 15
   object Panel1: TPanel
@@ -29,6 +30,7 @@ object FormInventoryMain: TFormInventoryMain
       Height = 25
       Caption = 'Add Product'
       TabOrder = 0
+      OnClick = ButtonAddProductClick
     end
   end
 end

@@ -17,6 +17,7 @@ type
     constructor Create;override;
     function DatabaseNotExists:Boolean;override;
     procedure CreateDatabase;override;
+    procedure CreateSchema;override;
     function ResetConnToInventoryDB : boolean;override;
   end;
 
@@ -52,5 +53,23 @@ begin
   FFDConn.Connected := true;
   FFDConn.Connected := false;
 end;
+
+procedure TFDInventorySQLite.CreateSchema;
+begin
+inherited;
+//  FDConn.ExecSQL('ALTER TABLE CUSTOMER'+
+//                 ' ADD ID INTEGER');
+//  FDConn.ExecSQL('ALTER TABLE SUPPLIER'+
+//                 ' ADD ID INTEGER');
+//  FDConn.ExecSQL('ALTER TABLE STOCKITEM'+
+//                 ' ADD ID INTEGER');
+//  FDConn.ExecSQL('ALTER TABLE PRODUCT'+
+//                 ' ADD ID INTEGER');
+//  FDConn.ExecSQL('ALTER TABLE ORDERS'+
+//                 ' ADD ID INTEGER');
+//  FDConn.ExecSQL('ALTER TABLE ORDERITEM'+
+//                 ' ADD ID INTEGER');
+end;
+
 
 end.

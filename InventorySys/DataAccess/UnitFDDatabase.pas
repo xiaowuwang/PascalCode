@@ -8,7 +8,10 @@ uses SysUtils, UnitDataInterfaces, Data.DbxSqlite, FireDAC.Stan.Intf, FireDAC.St
   FireDAC.Comp.Client, FireDAC.Stan.ExprFuncs, FireDAC.Phys.SQLiteDef,
   FireDAC.Phys.SQLite, FireDAC.Phys.MSSQL, FireDAC.Phys.MSSQLDef,
   FireDAC.Phys.ODBCBase, FireDAC.Comp.ScriptCommands, FireDAC.Stan.Util,
-  FireDAC.Comp.Script, Data.DB;
+  FireDAC.Comp.Script, Data.DB,
+  FireDAC.DatS, FireDAC.Stan.Param,
+  FireDAC.DApt.Intf,
+  FireDAC.Comp.DataSet;
 
 type
 
@@ -22,7 +25,7 @@ type
     function  DatabaseNotExists:Boolean;virtual;abstract;
     procedure CreateDatabase;virtual;abstract;
     function ResetConnToInventoryDB : Boolean;virtual;abstract;
-    procedure CreateSchema;
+    procedure CreateSchema;virtual;
   public
     constructor Create; virtual;
     function ConnectToDB : Boolean;
@@ -76,7 +79,7 @@ begin
     Table.FieldDefs.Add('CITY', ftString, 50);
     Table.FieldDefs.Add('ADDEDON', ftDateTime);
     { define primary key index }
-    Table.AddIndex('pkCUSTOMERID', 'CUSTOMERID', '', [soPrimary]);
+//    Table.AddIndex('pkCUSTOMERID', 'CUSTOMERID', '', [soPrimary]);
     { and create it; when the first parameter is True, an existing one is dropped }
     Table.CreateTable(False);
   finally
@@ -100,7 +103,7 @@ begin
     Table.FieldDefs.Add('CITY', ftString, 50);
     Table.FieldDefs.Add('ADDEDON', ftDateTime);
     { define primary key index }
-    Table.AddIndex('pkSUPPLIERID', 'SUPPLIERID', '', [soPrimary]);
+//    Table.AddIndex('pkSUPPLIERID', 'SUPPLIERID', '', [soPrimary]);
     { and create it; when the first parameter is True, an existing one is dropped }
     Table.CreateTable(False);
   finally
@@ -119,7 +122,7 @@ begin
     Table.FieldDefs.Add('LASTSTOCKQUQNTITY', ftInteger);
     Table.FieldDefs.Add('ADDEDON', ftDateTime);
     { define primary key index }
-    Table.AddIndex('pkSTOCKITEMID', 'STOCKITEMID', '', [soPrimary]);
+//    Table.AddIndex('pkSTOCKITEMID', 'STOCKITEMID', '', [soPrimary]);
     { and create it; when the first parameter is True, an existing one is dropped }
     Table.CreateTable(False);
   finally
@@ -147,7 +150,7 @@ begin
     Table.FieldDefs.Add('TAXTYPE', ftSmallint);
     Table.FieldDefs.Add('ADDEDON', ftDateTime);
     { define primary key index }
-    Table.AddIndex('pkPRODUCTID', 'PRODUCTID', '', [soPrimary]);
+//    Table.AddIndex('pkPRODUCTID', 'PRODUCTID', '', [soPrimary]);
     { and create it; when the first parameter is True, an existing one is dropped }
     Table.CreateTable(False);
   finally
@@ -158,17 +161,17 @@ begin
   try
     Table.Connection := FDConn;
     { specify table name }
-    Table.TableName := 'ORDER';
+    Table.TableName := 'ORDERS';
     { add some fields }
-    Table.FieldDefs.Add('ORDERID', ftInteger, 0, True);
+    Table.FieldDefs.Add('ORDERSID', ftInteger, 0, True);
     Table.FieldDefs.Add('CUSTOMERID', ftInteger, 0, True);
-    Table.FieldDefs.Add('ORDERDATE', ftDatetime, 0, True);
+    Table.FieldDefs.Add('ORDERSDATE', ftDatetime, 0, True);
     Table.FieldDefs.Add('STATUS', ftSmallInt, 0, True);
     Table.FieldDefs.Add('PAYMENTTYPE', ftSmallint, 0, True);
     Table.FieldDefs.Add('TRACKINGNUMBER', ftString, 50);
     Table.FieldDefs.Add('ADDEDON', ftDateTime);
     { define primary key index }
-    Table.AddIndex('pkORDERID', 'ORDERID', '', [soPrimary]);
+//    Table.AddIndex('pkORDERID', 'ORDERID', '', [soPrimary]);
     { and create it; when the first parameter is True, an existing one is dropped }
     Table.CreateTable(False);
   finally
@@ -190,7 +193,7 @@ begin
     Table.FieldDefs.Add('TAXTYPE', ftSmallint, 0, True);
     Table.FieldDefs.Add('ADDEDON', ftDateTime);
     { define primary key index }
-    Table.AddIndex('pkORDERID', 'ORDERID', '', [soPrimary]);
+//    Table.AddIndex('pkORDERID', 'ORDERID', '', [soPrimary]);
     { and create it; when the first parameter is True, an existing one is dropped }
     Table.CreateTable(False);
   finally
