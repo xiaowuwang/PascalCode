@@ -89,6 +89,23 @@ object FormIADInventoryMain: TFormIADInventoryMain
       Top = 0
       Action = EditPaste1
     end
+    object LabelFind: TLabel
+      Left = 151
+      Top = 0
+      Width = 58
+      Height = 22
+      Alignment = taCenter
+      AutoSize = False
+      Caption = 'Find'
+    end
+    object EditFind: TEdit
+      Left = 209
+      Top = 0
+      Width = 168
+      Height = 22
+      TabOrder = 0
+      OnChange = EditFindChange
+    end
   end
   object DBGridStockItems: TDBGrid
     Left = 0
@@ -870,9 +887,5 @@ object FormIADInventoryMain: TFormIADInventoryMain
       FEBF80030003D863FC9F80070003FE07FDDF807F0003FFFFFDDF80FF8007FFFF
       FDDF81FFF87FFFFFFFFFFFFFFFFFFFFF00000000000000000000000000000000
       000000000000}
-  end
-  object FDQuery1: TFDQuery
-    Left = 408
-    Top = 240
   end
 end

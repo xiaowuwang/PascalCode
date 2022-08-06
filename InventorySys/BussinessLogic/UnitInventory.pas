@@ -36,6 +36,7 @@ Type
     Destructor Destroy;
     procedure AddStockItem(anItem: TStockItem);
     procedure AddItemToDatabase(anItem: TStockItem);
+    procedure Find(aStr : String);
     property StockItemList    : TList<TStockItem> read FStockItemList;
     property FDQueryProduct   : TFDQuery read FFDQueryProduct;
     property DataSourceStockItems : TDataSource read FDataSourceStockItems;
@@ -50,6 +51,13 @@ begin
   FProductCode       := anItemCode;
   FQuantityOnHand    := anOnHand;
   FLastStockQuantity := aLastQuantity;
+end;
+
+procedure TInventory.Find(aStr : String);
+begin
+  FFDQueryStockItem.Filtered := False;
+  FFDQueryStockItem.Filter   := 'PRODUCTCODE Like ' + QuotedStr('%'+aStr+'%');
+  FFDQueryStockItem.Filtered := True;
 end;
 
 Constructor TInventory.Create(aDataConn : IDataConnection);

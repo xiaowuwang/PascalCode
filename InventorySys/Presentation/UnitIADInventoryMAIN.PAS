@@ -51,7 +51,6 @@ type
     Splitter1: TSplitter;
     PanelProductDetails: TPanel;
     DBTextProductName: TDBText;
-    FDQuery1: TFDQuery;
     DBMemoDescription: TDBMemo;
     DBTextSTANDARDCOST: TDBText;
     DBTextSAFETYSTOCKLEVEL: TDBText;
@@ -59,11 +58,14 @@ type
     DBTextLISTPRICE: TDBText;
     DBTextDEALERPRICE: TDBText;
     DBTextSTATUS: TDBText;
+    EditFind: TEdit;
+    LabelFind: TLabel;
     procedure FileNew1Execute(Sender: TObject);
     procedure FileOpen1Execute(Sender: TObject);
     procedure FileSave1Execute(Sender: TObject);
     procedure FileExit1Execute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure EditFindChange(Sender: TObject);
   private
     { Private declarations }
     FConn      : IDataConnection;
@@ -98,8 +100,8 @@ end;
 
 procedure TFormIADInventoryMain.FormCreate(Sender: TObject);
 begin
-  FConn := TFDInventoryMSSql.Create;
-//  FConn := TFDInventoryFB.Create;
+//  FConn := TFDInventoryMSSql.Create;
+  FConn := TFDInventoryFB.Create;
   FConn.ConnectToDB;
   FInventory := TInventory.Create(FConn);
   DBGridStockItems.DataSource := FInventory.DataSourceStockItems;
@@ -119,9 +121,11 @@ begin
   DBTextLISTPRICE.DataField  := 'LISTPRICE';
   DBTextDEALERPRICE.DataField  := 'DEALERPRICE';
   DBTextSTATUS.DataField  := 'STATUS';
+end;
 
-
-
+procedure TFormIADInventoryMain.EditFindChange(Sender: TObject);
+begin
+  FInventory.Find(EditFind.Text);
 end;
 
 procedure TFormIADInventoryMain.FileExit1Execute(Sender: TObject);
