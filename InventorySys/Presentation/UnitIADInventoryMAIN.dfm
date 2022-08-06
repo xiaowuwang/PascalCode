@@ -16,6 +16,14 @@ object FormIADInventoryMain: TFormIADInventoryMain
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 16
+  object Splitter1: TSplitter
+    Left = 553
+    Top = 30
+    Width = 7
+    Height = 406
+    Align = alRight
+    ExplicitLeft = 623
+  end
   object StatusBar: TStatusBar
     Left = 0
     Top = 436
@@ -85,7 +93,7 @@ object FormIADInventoryMain: TFormIADInventoryMain
   object DBGridStockItems: TDBGrid
     Left = 0
     Top = 30
-    Width = 821
+    Width = 553
     Height = 406
     Align = alClient
     DataSource = DataSourceStockItems
@@ -122,6 +130,14 @@ object FormIADInventoryMain: TFormIADInventoryMain
         Width = 192
         Visible = True
       end>
+  end
+  object PanelProductDetails: TPanel
+    Left = 560
+    Top = 30
+    Width = 261
+    Height = 406
+    Align = alRight
+    TabOrder = 3
   end
   object MainMenu1: TMainMenu
     Images = ImageList1

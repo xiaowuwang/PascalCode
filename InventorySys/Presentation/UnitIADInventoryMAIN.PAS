@@ -46,6 +46,8 @@ type
     HelpAboutItem: TMenuItem;
     DBGridStockItems: TDBGrid;
     DataSourceStockItems: TDataSource;
+    Splitter1: TSplitter;
+    PanelProductDetails: TPanel;
     procedure FileNew1Execute(Sender: TObject);
     procedure FileOpen1Execute(Sender: TObject);
     procedure FileSave1Execute(Sender: TObject);
