@@ -96,7 +96,6 @@ object FormIADInventoryMain: TFormIADInventoryMain
     Width = 553
     Height = 406
     Align = alClient
-    DataSource = DataSourceStockItems
     TabOrder = 2
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
@@ -793,9 +792,5 @@ object FormIADInventoryMain: TFormIADInventoryMain
       FEBF80030003D863FC9F80070003FE07FDDF807F0003FFFFFDDF80FF8007FFFF
       FDDF81FFF87FFFFFFFFFFFFFFFFFFFFF00000000000000000000000000000000
       000000000000}
-  end
-  object DataSourceStockItems: TDataSource
-    Left = 728
-    Top = 232
   end
 end

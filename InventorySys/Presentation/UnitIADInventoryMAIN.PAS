@@ -45,7 +45,6 @@ type
     Help1: TMenuItem;
     HelpAboutItem: TMenuItem;
     DBGridStockItems: TDBGrid;
-    DataSourceStockItems: TDataSource;
     Splitter1: TSplitter;
     PanelProductDetails: TPanel;
     procedure FileNew1Execute(Sender: TObject);
@@ -91,7 +90,7 @@ begin
 //  FConn := TFDInventoryFB.Create;
   FConn.ConnectToDB;
   FInventory := TInventory.Create(FConn);
-  DataSourceStockItems.DataSet := FInventory.Query;
+  DBGridStockItems.DataSource := FInventory.DataSourceStockItems;
 end;
 
 procedure TFormIADInventoryMain.FileExit1Execute(Sender: TObject);

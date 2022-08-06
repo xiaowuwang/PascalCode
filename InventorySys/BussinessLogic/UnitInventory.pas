@@ -25,15 +25,18 @@ Type
   TInventory = class(TBaseObject)
   private
     FDConn: TFDConnection;
-    FDQuery : TFDQuery;
+    FFDQueryStockItem : TFDQuery;
+    FFDQueryProduct   : TFDQuery;
     FStockItemList : TList<TStockItem>;
+    FDataSourceStockItems: TDataSource;
   public
     Constructor Create(aDataConn : IDataConnection);
     Destructor Destroy;
     procedure AddStockItem(anItem: TStockItem);
     procedure AddItemToDatabase(anItem: TStockItem);
-    property StockItemList : TList<TStockItem> read FStockItemList;
-    property Query : TFDQuery read FDQuery;
+    property StockItemList    : TList<TStockItem> read FStockItemList;
+    property FDQueryProduct   : TFDQuery read FFDQueryProduct;
+    property DataSourceStockItems : TDataSource read FDataSourceStockItems;
   end;
 
 implementation
@@ -50,10 +53,12 @@ Constructor TInventory.Create(aDataConn : IDataConnection);
 begin
   inherited Create;
   FDConn  := aDataConn.FDConn;
-  FDQuery := TFDQuery.Create(nil);
-  FDQuery.Connection := FDConn;
+  FFDQueryStockItem := TFDQuery.Create(nil);
+  FFDQueryStockItem.Connection := FDConn;
   FStockItemList := TList<TStockItem>.Create;
-  with FDQuery do
+  FDataSourceStockItems := TDataSource.Create(nil);
+  FDataSourceStockItems.DataSet := FFDQueryStockItem;
+  with FFDQueryStockItem do
   begin
     SQL.Text := 'select * from STOCKITEM';
     Open;
@@ -68,7 +73,7 @@ end;
 
 procedure TInventory.AddItemToDatabase(anItem: TStockItem);
 begin
-  with FDQuery do
+  with FFDQueryStockItem do
   begin
     SQL.Text := 'select * from STOCKITEM';
     Open;
