@@ -50,9 +50,15 @@ type
     DBGridStockItems: TDBGrid;
     Splitter1: TSplitter;
     PanelProductDetails: TPanel;
-    DBText1: TDBText;
+    DBTextProductName: TDBText;
     FDQuery1: TFDQuery;
-    DBMemo1: TDBMemo;
+    DBMemoDescription: TDBMemo;
+    DBTextSTANDARDCOST: TDBText;
+    DBTextSAFETYSTOCKLEVEL: TDBText;
+    DBTextREORDERPOINT: TDBText;
+    DBTextLISTPRICE: TDBText;
+    DBTextDEALERPRICE: TDBText;
+    DBTextSTATUS: TDBText;
     procedure FileNew1Execute(Sender: TObject);
     procedure FileOpen1Execute(Sender: TObject);
     procedure FileSave1Execute(Sender: TObject);
@@ -97,8 +103,25 @@ begin
   FConn.ConnectToDB;
   FInventory := TInventory.Create(FConn);
   DBGridStockItems.DataSource := FInventory.DataSourceStockItems;
-  DBMemo1.DataSource := FInventory.DataSourceProducts;
-  DBMemo1.DataField  := 'DESCRIPTION';
+  DBTextProductName.DataSource := FInventory.DataSourceProducts;
+  DBTextProductName.DataField  := 'PRODUCTNAME';
+  DBMemoDescription.DataSource := FInventory.DataSourceProducts;
+  DBMemoDescription.DataField  := 'DESCRIPTION';
+  DBTextSTANDARDCOST.DataSource := FInventory.DataSourceProducts;
+  DBTextSAFETYSTOCKLEVEL.DataSource := FInventory.DataSourceProducts;
+  DBTextREORDERPOINT.DataSource := FInventory.DataSourceProducts;
+  DBTextLISTPRICE.DataSource := FInventory.DataSourceProducts;
+  DBTextDEALERPRICE.DataSource := FInventory.DataSourceProducts;
+  DBTextSTATUS.DataSource := FInventory.DataSourceProducts;
+  DBTextSTANDARDCOST.DataField  := 'STANDARDCOST';
+  DBTextSAFETYSTOCKLEVEL.DataField  := 'SAFETYSTOCKLEVEL';
+  DBTextREORDERPOINT.DataField  := 'REORDERPOINT';
+  DBTextLISTPRICE.DataField  := 'LISTPRICE';
+  DBTextDEALERPRICE.DataField  := 'DEALERPRICE';
+  DBTextSTATUS.DataField  := 'STATUS';
+
+
+
 end;
 
 procedure TFormIADInventoryMain.FileExit1Execute(Sender: TObject);

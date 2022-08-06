@@ -17,7 +17,7 @@ object FormIADInventoryMain: TFormIADInventoryMain
   PixelsPerInch = 96
   TextHeight = 16
   object Splitter1: TSplitter
-    Left = 553
+    Left = 497
     Top = 30
     Width = 7
     Height = 406
@@ -93,7 +93,7 @@ object FormIADInventoryMain: TFormIADInventoryMain
   object DBGridStockItems: TDBGrid
     Left = 0
     Top = 30
-    Width = 553
+    Width = 497
     Height = 406
     Align = alClient
     TabOrder = 2
@@ -109,7 +109,7 @@ object FormIADInventoryMain: TFormIADInventoryMain
         FieldName = 'PRODUCTCODE'
         Title.Alignment = taCenter
         Title.Caption = 'Product Code'
-        Width = 130
+        Width = 120
         Visible = True
       end
       item
@@ -118,7 +118,7 @@ object FormIADInventoryMain: TFormIADInventoryMain
         FieldName = 'QUANTITYONHAND'
         Title.Alignment = taCenter
         Title.Caption = 'Quantity On Hand'
-        Width = 202
+        Width = 150
         Visible = True
       end
       item
@@ -126,28 +126,93 @@ object FormIADInventoryMain: TFormIADInventoryMain
         Expanded = False
         FieldName = 'LASTSTOCKQUQNTITY'
         Title.Caption = 'Last Stock Take Quantity'
-        Width = 192
+        Width = 180
         Visible = True
       end>
   end
   object PanelProductDetails: TPanel
-    Left = 560
+    Left = 504
     Top = 30
-    Width = 261
+    Width = 317
     Height = 406
     Align = alRight
     TabOrder = 3
-    object DBText1: TDBText
-      Left = 6
-      Top = 16
-      Width = 65
-      Height = 17
+    object DBTextProductName: TDBText
+      Left = 1
+      Top = 1
+      Width = 315
+      Height = 16
+      Align = alTop
+      AutoSize = True
+      ExplicitLeft = 6
+      ExplicitTop = 16
+      ExplicitWidth = 135
     end
-    object DBMemo1: TDBMemo
-      Left = 6
-      Top = 49
-      Width = 251
-      Height = 89
+    object DBTextSTANDARDCOST: TDBText
+      Left = 1
+      Top = 17
+      Width = 315
+      Height = 17
+      Align = alTop
+      ExplicitLeft = 16
+      ExplicitTop = 16
+      ExplicitWidth = 65
+    end
+    object DBTextSAFETYSTOCKLEVEL: TDBText
+      Left = 1
+      Top = 34
+      Width = 315
+      Height = 17
+      Align = alTop
+      ExplicitLeft = 40
+      ExplicitTop = 39
+      ExplicitWidth = 65
+    end
+    object DBTextREORDERPOINT: TDBText
+      Left = 1
+      Top = 51
+      Width = 315
+      Height = 17
+      Align = alTop
+      ExplicitLeft = 40
+      ExplicitTop = 54
+      ExplicitWidth = 65
+    end
+    object DBTextLISTPRICE: TDBText
+      Left = 1
+      Top = 68
+      Width = 315
+      Height = 17
+      Align = alTop
+      ExplicitLeft = 48
+      ExplicitTop = 72
+      ExplicitWidth = 65
+    end
+    object DBTextDEALERPRICE: TDBText
+      Left = 1
+      Top = 85
+      Width = 315
+      Height = 17
+      Align = alTop
+      ExplicitLeft = 48
+      ExplicitTop = 95
+      ExplicitWidth = 65
+    end
+    object DBTextSTATUS: TDBText
+      Left = 1
+      Top = 102
+      Width = 315
+      Height = 17
+      Align = alTop
+      ExplicitLeft = 48
+      ExplicitTop = 118
+      ExplicitWidth = 65
+    end
+    object DBMemoDescription: TDBMemo
+      Left = -1
+      Top = 233
+      Width = 315
+      Height = 168
       TabOrder = 0
     end
   end
