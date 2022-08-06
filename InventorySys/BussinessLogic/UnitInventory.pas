@@ -33,6 +33,7 @@ Type
     procedure AddStockItem(anItem: TStockItem);
     procedure AddItemToDatabase(anItem: TStockItem);
     property StockItemList : TList<TStockItem> read FStockItemList;
+    property Query : TFDQuery read FDQuery;
   end;
 
 implementation
@@ -52,6 +53,11 @@ begin
   FDQuery := TFDQuery.Create(nil);
   FDQuery.Connection := FDConn;
   FStockItemList := TList<TStockItem>.Create;
+  with FDQuery do
+  begin
+    SQL.Text := 'select * from STOCKITEM';
+    Open;
+  end;
 end;
 
 procedure TInventory.AddStockItem(anItem: TStockItem);
@@ -62,15 +68,18 @@ end;
 
 procedure TInventory.AddItemToDatabase(anItem: TStockItem);
 begin
-  FDQuery.SQL.Text := 'select * from STOCKITEM';
-  FDQuery.Open;
-  FDQuery.Append;  // or FDQuery1.Insert;
-  FDQuery.FieldByName('STOCKITEMID').AsInteger := 1;
-  FDQuery.FieldByName('PRODUCTCODE').AsString := anItem.FProductCode;
-  FDQuery.FieldByName('QUANTITYONHAND').AsInteger := anItem.FQuantityOnHand;
-  FDQuery.FieldByName('LASTSTOCKQUQNTITY').AsInteger := anItem.FLastStockQuantity;
-  FDQuery.FieldByName('ADDEDON').AsDateTime := Now;
-  FDQuery.Post;
+  with FDQuery do
+  begin
+    SQL.Text := 'select * from STOCKITEM';
+    Open;
+    Append;
+    FieldByName('STOCKITEMID').AsInteger       := 650;
+    FieldByName('PRODUCTCODE').AsString        := anItem.FProductCode;
+    FieldByName('QUANTITYONHAND').AsInteger    := anItem.FQuantityOnHand;
+    FieldByName('LASTSTOCKQUQNTITY').AsInteger := anItem.FLastStockQuantity;
+    FieldByName('ADDEDON').AsDateTime          := Now;
+    Post;
+  end;
 end;
 
 
