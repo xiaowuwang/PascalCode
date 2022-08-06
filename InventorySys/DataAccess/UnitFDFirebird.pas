@@ -78,13 +78,7 @@ begin
       Add('  USER ''sysdba'' PASSWORD ''masterkey''     ');
       Add('  PAGE_SIZE 16384                            ');
       Add('  DEFAULT CHARACTER SET NONE;                ');
-      Add('                                             ');
       Add('SET TERM ^ ;                                 ');
-      Add('                                             ');
-      Add('CREATE PROCEDURE MY_PROC RETURNS (aParam INTEGER) AS  ');
-      Add('BEGIN                                        ');
-      Add('  aParam = 10;                               ');
-      Add('END^                                         ');
     end;
     ValidateAll;
     ExecuteAll;

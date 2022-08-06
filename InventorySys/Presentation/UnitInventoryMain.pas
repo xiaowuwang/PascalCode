@@ -49,8 +49,7 @@ end;
 procedure TFormInventoryMain.FormCreate(Sender: TObject);
 begin
 //  FConn := TFDInventoryMSSql.Create;
-//  FConn := TFDInventoryFB.Create;
-  FConn := TFDInventorySQLite.Create;
+  FConn := TFDInventoryFB.Create;
   FConn.ConnectToDB;
   FInventory := TInventory.Create(FConn);
 end;
