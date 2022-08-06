@@ -108,7 +108,6 @@
         <DCCReference Include="DataAccess\UnitFDDatabase.pas"/>
         <DCCReference Include="DataAccess\UnitFDFirebird.pas"/>
         <DCCReference Include="DataAccess\UnitFDMSSql.pas"/>
-        <DCCReference Include="DataAccess\UnitFDSQLite.pas"/>
         <DCCReference Include="Presentation\UnitInventoryMain.pas">
             <Form>FormInventoryMain</Form>
             <FormType>dfm</FormType>

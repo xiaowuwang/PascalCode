@@ -19,7 +19,6 @@ uses
   UnitFDDatabase in 'DataAccess\UnitFDDatabase.pas',
   UnitFDFirebird in 'DataAccess\UnitFDFirebird.pas',
   UnitFDMSSql in 'DataAccess\UnitFDMSSql.pas',
-  UnitFDSQLite in 'DataAccess\UnitFDSQLite.pas',
   UnitInventoryMain in 'Presentation\UnitInventoryMain.pas' {FormInventoryMain};
 
 {$R *.res}

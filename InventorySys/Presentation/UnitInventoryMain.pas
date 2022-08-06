@@ -29,7 +29,7 @@ implementation
 
 {$R *.dfm}
 
-uses UnitFDMSSql, UnitFDFirebird, UnitFDSQLite, UnitProduct;
+uses UnitFDMSSql, UnitFDFirebird, UnitProduct;
 
 procedure TFormInventoryMain.ButtonAddProductClick(Sender: TObject);
 begin
