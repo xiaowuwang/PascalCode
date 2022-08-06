@@ -6,7 +6,10 @@ uses Winapi.Windows, System.Classes, Vcl.Graphics, Vcl.Forms, Vcl.Controls,
   Vcl.Menus, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, Vcl.ComCtrls,
   Vcl.ImgList, Vcl.StdActns, Vcl.ActnList, Vcl.ToolWin, System.ImageList,
   System.Actions, Data.DB, Vcl.Grids, Vcl.DBGrids, UnitDataInterfaces,
-  UnitInventory;
+  UnitInventory, Vcl.DBCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client;
 
 type
   TFormIADInventoryMain = class(TForm)
@@ -47,6 +50,9 @@ type
     DBGridStockItems: TDBGrid;
     Splitter1: TSplitter;
     PanelProductDetails: TPanel;
+    DBText1: TDBText;
+    FDQuery1: TFDQuery;
+    DBMemo1: TDBMemo;
     procedure FileNew1Execute(Sender: TObject);
     procedure FileOpen1Execute(Sender: TObject);
     procedure FileSave1Execute(Sender: TObject);
@@ -91,6 +97,8 @@ begin
   FConn.ConnectToDB;
   FInventory := TInventory.Create(FConn);
   DBGridStockItems.DataSource := FInventory.DataSourceStockItems;
+  DBMemo1.DataSource := FInventory.DataSourceProducts;
+  DBMemo1.DataField  := 'DESCRIPTION';
 end;
 
 procedure TFormIADInventoryMain.FileExit1Execute(Sender: TObject);

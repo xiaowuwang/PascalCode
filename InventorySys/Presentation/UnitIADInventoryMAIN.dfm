@@ -137,6 +137,19 @@ object FormIADInventoryMain: TFormIADInventoryMain
     Height = 406
     Align = alRight
     TabOrder = 3
+    object DBText1: TDBText
+      Left = 6
+      Top = 16
+      Width = 65
+      Height = 17
+    end
+    object DBMemo1: TDBMemo
+      Left = 6
+      Top = 49
+      Width = 251
+      Height = 89
+      TabOrder = 0
+    end
   end
   object MainMenu1: TMainMenu
     Images = ImageList1
@@ -792,5 +805,9 @@ object FormIADInventoryMain: TFormIADInventoryMain
       FEBF80030003D863FC9F80070003FE07FDDF807F0003FFFFFDDF80FF8007FFFF
       FDDF81FFF87FFFFFFFFFFFFFFFFFFFFF00000000000000000000000000000000
       000000000000}
+  end
+  object FDQuery1: TFDQuery
+    Left = 408
+    Top = 240
   end
 end

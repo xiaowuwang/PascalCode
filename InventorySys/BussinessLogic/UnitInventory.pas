@@ -29,6 +29,8 @@ Type
     FFDQueryProduct   : TFDQuery;
     FStockItemList : TList<TStockItem>;
     FDataSourceStockItems: TDataSource;
+    FDataSourceProducts: TDataSource;
+    procedure AfterScroll(DataSet: TDataSet);
   public
     Constructor Create(aDataConn : IDataConnection);
     Destructor Destroy;
@@ -37,6 +39,7 @@ Type
     property StockItemList    : TList<TStockItem> read FStockItemList;
     property FDQueryProduct   : TFDQuery read FFDQueryProduct;
     property DataSourceStockItems : TDataSource read FDataSourceStockItems;
+    property DataSourceProducts   : TDataSource read FDataSourceProducts;
   end;
 
 implementation
@@ -55,13 +58,32 @@ begin
   FDConn  := aDataConn.FDConn;
   FFDQueryStockItem := TFDQuery.Create(nil);
   FFDQueryStockItem.Connection := FDConn;
+  FFDQueryProduct   := TFDQuery.Create(NIL);
+  FFDQueryProduct.Connection := FDConn;
   FStockItemList := TList<TStockItem>.Create;
-  FDataSourceStockItems := TDataSource.Create(nil);
-  FDataSourceStockItems.DataSet := FFDQueryStockItem;
   with FFDQueryStockItem do
   begin
     SQL.Text := 'select * from STOCKITEM';
     Open;
+  end;
+  with FFDQueryProduct do
+  begin
+    SQL.Text := 'select * from PRODUCT where PRODUCTCODE = :PRODUCTCODE';
+  end;
+  FDataSourceStockItems := TDataSource.Create(nil);
+  FDataSourceStockItems.DataSet := FFDQueryStockItem;
+  FDataSourceProducts := TDataSource.Create(nil);
+  FDataSourceProducts.DataSet := FFDQueryProduct;
+  FFDQueryStockItem.AfterScroll := AfterScroll;
+end;
+
+procedure TInventory.AfterScroll(DataSet: TDataSet);
+begin
+  with FFDQueryProduct do
+  begin
+    Close;
+    ParamByName('PRODUCTCODE').AsString := FFDQueryStockItem.FieldByName('PRODUCTCODE').AsString;
+    open;
   end;
 end;
 
@@ -69,7 +91,6 @@ procedure TInventory.AddStockItem(anItem: TStockItem);
 begin
   FStockItemList.Add(anItem);
 end;
-
 
 procedure TInventory.AddItemToDatabase(anItem: TStockItem);
 begin
