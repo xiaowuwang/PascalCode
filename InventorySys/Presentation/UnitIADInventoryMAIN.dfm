@@ -12,6 +12,7 @@ object FormIADInventoryMain: TFormIADInventoryMain
   Font.Style = []
   Menu = MainMenu1
   OldCreateOrder = False
+  Position = poMainFormCenter
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 16
@@ -27,8 +28,6 @@ object FormIADInventoryMain: TFormIADInventoryMain
     AutoHint = True
     Panels = <>
     SimplePanel = True
-    ExplicitTop = 178
-    ExplicitWidth = 352
   end
   object ToolBar1: TToolBar
     Left = 0
@@ -44,7 +43,6 @@ object FormIADInventoryMain: TFormIADInventoryMain
     ShowHint = True
     TabOrder = 1
     Wrapable = False
-    ExplicitWidth = 352
     object ToolButton9: TToolButton
       Left = 5
       Top = 0

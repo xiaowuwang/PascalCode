@@ -64,7 +64,7 @@ var
 
 implementation
 
-uses About, UnitFDMSSql, UnitFDFirebird;
+uses UnitFDMSSql, UnitFDFirebird;
 
 {$R *.dfm}
 
