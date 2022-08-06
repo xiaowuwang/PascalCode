@@ -66,9 +66,7 @@ begin
   Table := TFDTable.Create(nil);
   try
     Table.Connection := FDConn;
-    { specify table name }
     Table.TableName := 'CUSTOMER';
-    { add some fields }
     Table.FieldDefs.Add('CUSTOMERID', ftInteger, 0, True);
     Table.FieldDefs.Add('FIRSTNAME', ftString, 50);
     Table.FieldDefs.Add('LASTNAME', ftString, 50);
@@ -78,9 +76,6 @@ begin
     Table.FieldDefs.Add('ADDRESS2', ftString, 50);
     Table.FieldDefs.Add('CITY', ftString, 50);
     Table.FieldDefs.Add('ADDEDON', ftDateTime);
-    { define primary key index }
-//    Table.AddIndex('pkCUSTOMERID', 'CUSTOMERID', '', [soPrimary]);
-    { and create it; when the first parameter is True, an existing one is dropped }
     Table.CreateTable(False);
   finally
     FreeAndNil(Table);
@@ -89,10 +84,7 @@ begin
   Table := TFDTable.Create(nil);
   try
     Table.Connection := FDConn;
-    { specify table name }
-    { specify table name }
     Table.TableName := 'SUPPLIER';
-    { add some fields }
     Table.FieldDefs.Add('SUPPLIERID', ftInteger, 0, True);
     Table.FieldDefs.Add('FIRSTNAME', ftString, 50);
     Table.FieldDefs.Add('LASTNAME', ftString, 50);
@@ -102,9 +94,6 @@ begin
     Table.FieldDefs.Add('ADDRESS2', ftString, 50);
     Table.FieldDefs.Add('CITY', ftString, 50);
     Table.FieldDefs.Add('ADDEDON', ftDateTime);
-    { define primary key index }
-//    Table.AddIndex('pkSUPPLIERID', 'SUPPLIERID', '', [soPrimary]);
-    { and create it; when the first parameter is True, an existing one is dropped }
     Table.CreateTable(False);
   finally
     FreeAndNil(Table);
@@ -113,17 +102,12 @@ begin
   Table := TFDTable.Create(nil);
   try
     Table.Connection := FDConn;
-    { specify table name }
     Table.TableName := 'STOCKITEM';
-    { add some fields }
     Table.FieldDefs.Add('STOCKITEMID', ftInteger, 0, True);
     Table.FieldDefs.Add('PRODUCTCODE', ftString, 25, True);
     Table.FieldDefs.Add('QUANTITYONHAND', ftInteger);
     Table.FieldDefs.Add('LASTSTOCKQUQNTITY', ftInteger);
     Table.FieldDefs.Add('ADDEDON', ftDateTime);
-    { define primary key index }
-//    Table.AddIndex('pkSTOCKITEMID', 'STOCKITEMID', '', [soPrimary]);
-    { and create it; when the first parameter is True, an existing one is dropped }
     Table.CreateTable(False);
   finally
     FreeAndNil(Table);
@@ -132,9 +116,7 @@ begin
   Table := TFDTable.Create(nil);
   try
     Table.Connection := FDConn;
-    { specify table name }
     Table.TableName := 'PRODUCT';
-    { add some fields }
     Table.FieldDefs.Add('PRODUCTID', ftInteger, 0, True);
     Table.FieldDefs.Add('PRODUCTCODE', ftString, 25, True);
     Table.FieldDefs.Add('PRODUCTNAME', ftString, 50, True);
@@ -149,9 +131,6 @@ begin
     Table.FieldDefs.Add('STATUS', ftSmallint);
     Table.FieldDefs.Add('TAXTYPE', ftSmallint);
     Table.FieldDefs.Add('ADDEDON', ftDateTime);
-    { define primary key index }
-//    Table.AddIndex('pkPRODUCTID', 'PRODUCTID', '', [soPrimary]);
-    { and create it; when the first parameter is True, an existing one is dropped }
     Table.CreateTable(False);
   finally
     FreeAndNil(Table);
@@ -160,9 +139,7 @@ begin
   Table := TFDTable.Create(nil);
   try
     Table.Connection := FDConn;
-    { specify table name }
     Table.TableName := 'ORDERS';
-    { add some fields }
     Table.FieldDefs.Add('ORDERSID', ftInteger, 0, True);
     Table.FieldDefs.Add('CUSTOMERID', ftInteger, 0, True);
     Table.FieldDefs.Add('ORDERSDATE', ftDatetime, 0, True);
@@ -170,9 +147,6 @@ begin
     Table.FieldDefs.Add('PAYMENTTYPE', ftSmallint, 0, True);
     Table.FieldDefs.Add('TRACKINGNUMBER', ftString, 50);
     Table.FieldDefs.Add('ADDEDON', ftDateTime);
-    { define primary key index }
-//    Table.AddIndex('pkORDERID', 'ORDERID', '', [soPrimary]);
-    { and create it; when the first parameter is True, an existing one is dropped }
     Table.CreateTable(False);
   finally
     FreeAndNil(Table);
@@ -181,9 +155,7 @@ begin
   Table := TFDTable.Create(nil);
   try
     Table.Connection := FDConn;
-    { specify table name }
     Table.TableName := 'ORDERITEM';
-    { add some fields }
     Table.FieldDefs.Add('ORDERITEMID', ftInteger);
     Table.FieldDefs.Add('ORDERID', ftInteger, 0, True);
     Table.FieldDefs.Add('ORDERLINE', ftSmallInt);
@@ -192,27 +164,138 @@ begin
     Table.FieldDefs.Add('UNITPRICE', ftFloat, 0, True);
     Table.FieldDefs.Add('TAXTYPE', ftSmallint, 0, True);
     Table.FieldDefs.Add('ADDEDON', ftDateTime);
-    { define primary key index }
-//    Table.AddIndex('pkORDERID', 'ORDERID', '', [soPrimary]);
-    { and create it; when the first parameter is True, an existing one is dropped }
     Table.CreateTable(False);
   finally
     FreeAndNil(Table);
   end;
 end;
 
+procedure TFDDatabase.PopulateData;
 const
-  SqlInsertProduct : String ='Insert Into PRODUCT (PRODUCTID, PRODUCTCODE, PRODUCTNAME'+
+  SqlInsertStockItem : String ='Insert Into STOCKITEM(STOCKITEMID, PRODUCTCODE, QUANTITYONHAND'+
+                               ', LASTSTOCKQUQNTITY, ADDEDON )' +
+                               ' Values ( %s, ''%s'', %s, %s, %s)';
+  SqlInsertProduct   : String ='Insert Into PRODUCT (PRODUCTID, PRODUCTCODE, PRODUCTNAME'+
                                ', STANDARDCOST, SAFETYSTOCKLEVEL, REORDERPOINT'+
                                ', LISTPRICE, PRODUCTLINE, DEALERPRICE, MODELNAME'+
                                ', DESCRIPTION, STATUS, TAXTYPE, ADDEDON )' +
                                ' Values ( %s, ''%s'', ''%s'', %s, %s, %s' +
                                ', %s, ''%s'', %s, ''%s'', ''%s'', %s, %s, %s)';
-
-procedure TFDDatabase.PopulateData;
 var
   aSqlStr : String;
 begin
+  aSqlStr := Format(SqlInsertStockItem,['551','FR-M21S-40','500','375',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['552','FD-2342','500','375',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['553','HB-T721','500','375',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['554','HB-T928','500','375',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['555','FB-9873','500','375',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['556','CS-4759','500','375',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['557','CS-6583','500','375',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['558','CS-9183','500','375',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['559','CH-0234','500','375',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['560','BK-T44U-60','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['561','BK-T79Y-46','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['562','BK-T79Y-50','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['563','BK-T79Y-54','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['564','BK-T79Y-60','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['565','BK-T18U-54','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['566','BK-T18U-58','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['567','BK-T18U-62','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['568','BK-T18Y-44','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['569','BK-T18Y-50','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['570','BK-T18Y-54','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['571','BK-T18Y-58','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['572','BK-T18Y-62','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['573','BK-T79U-46','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['574','BK-T79U-50','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['575','BK-T79U-54','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['576','BK-T79U-60','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['577','BK-T44U-46','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['578','BK-T44U-50','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['579','BK-T44U-54','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['580','BK-R79Y-40','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['581','BK-R79Y-42','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['582','BK-R79Y-44','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['583','BK-R79Y-48','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['584','BK-R19B-58','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['585','BK-T18U-44','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['586','BK-T18U-50','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['587','BK-M38S-38','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['588','BK-M38S-40','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['589','BK-M38S-42','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['590','BK-M38S-46','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['591','BK-M18S-40','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['592','BK-M18S-42','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['593','BK-M18S-44','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['594','BK-M18S-48','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['595','BK-M18S-52','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['596','BK-M18B-40','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['597','BK-M18B-42','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['598','BK-M18B-44','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['599','BK-M18B-48','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['600','BK-M18B-52','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['601','BB-7421','500','375',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['602','BB-8107','500','375',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['603','BB-9108','500','375',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['604','BK-R19B-44','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['605','BK-R19B-48','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
+  aSqlStr := Format(SqlInsertStockItem,['606','BK-R19B-52','100','75',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
+  FDConn.ExecSQL(aSqlStr);
   aSqlStr := Format(SqlInsertProduct,['551','FR-M21S-40','LL Mountain Frame - Silver 40','144.5938','500','375','264.05','M','158.43','LL Mountain Frame','Our best value utilizing the same ground-breaking frame technology as the ML aluminum frame','1','0',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
   FDConn.ExecSQL(aSqlStr);
   aSqlStr := Format(SqlInsertProduct,['552','FD-2342',   'Front Derailleur',              '40.6216','500','375','91.49', 'M','54.894','Front Derailleur', 'Wide-link design.','1','0',QuotedStr(FormatDateTime('dd.mm.yyyy hh:nn',NOW))]);
